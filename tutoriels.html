@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tech-Tutos — MLY</title>
+  <meta name="description" content="Tutoriels et documentations techniques par Mamadou Alpha LY" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    
+    .scrolling-banner {
+      overflow: hidden;
+      white-space: nowrap;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    
+    .scrolling-content {
+      display: inline-block;
+      animation: scroll 40s linear infinite;
+      padding-left: 100%;
+    }
+    
+    .nav-item {
+      position: relative;
+    }
+    
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      min-width: 250px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      padding: 8px 0;
+      z-index: 1000;
+      margin-top: 8px;
+    }
+    
+    .nav-item:hover .dropdown {
+      display: block;
+    }
+    
+    .dropdown-item {
+      padding: 12px 20px;
+      color: #374151;
+      display: block;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+    }
+    
+    .dropdown-item:hover {
+      background: #f3f4f6;
+      color: #7c3aed;
+      padding-left: 24px;
+    }
+    
+    .glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .card {
+      transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+    
+    .mobile-dropdown {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    
+    .mobile-dropdown.active {
+      max-height: 500px;
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+  
+  <!-- Header -->
+  <header class="glass sticky top-0 z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="tutoriels.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <div class="w-12 h-12 bg-gradient-to-br from-purple-600 to-violet-600 rounded-lg flex items-center justify-center text-white font-black shadow-lg">
+            TT
+          </div>
+          <div>
+            <div class="font-black text-xl text-purple-900">Tech-Tutos</div>
+            <div class="text-xs text-purple-600">by Mamadou Alpha LY</div>
+          </div>
+        </a>
+        
+        <!-- Desktop Nav -->
+        <nav class="hidden lg:flex items-center gap-8 text-sm font-semibold">
+          <a href="index.html" class="text-gray-700 hover:text-purple-600 transition-colors">← Portfolio</a>
+          
+          <div class="nav-item">
+            <button class="text-gray-700 hover:text-purple-600 transition-colors flex items-center gap-1">
+              Windows Server <span class="text-xs">▼</span>
+            </button>
+            <div class="dropdown" id="dropdown-windows">
+              <a href="#" onclick="openPDF('docs/tuto-ad.pdf')" class="dropdown-item">📁 Active Directory</a>
+              <a href="#" onclick="openPDF('docs/tuto-gpo.pdf')" class="dropdown-item">⚙️ Stratégies de groupe (GPO)</a>
+              <a href="#" onclick="openPDF('docs/tuto-dns-dhcp.pdf')" class="dropdown-item">🌐 DNS & DHCP</a>
+              <a href="#" onclick="openPDF('docs/tuto-fsrm.pdf')" class="dropdown-item">💾 FSRM - Quotas disque</a>
+              <a href="#" onclick="openPDF('docs/tuto-serveur-impression.pdf')" class="dropdown-item">🖨️ Serveur d'impression</a>
+            </div>
+          </div>
+          
+          <div class="nav-item">
+            <button class="text-gray-700 hover:text-purple-600 transition-colors flex items-center gap-1">
+              Linux <span class="text-xs">▼</span>
+            </button>
+            <div class="dropdown">
+              <a href="#" onclick="openPDF('docs/tuto-debian-install.pdf')" class="dropdown-item">🐧 Installation Debian</a>
+              <a href="#" onclick="openPDF('docs/tuto-ssh-securisation.pdf')" class="dropdown-item">🔐 Sécurisation SSH</a>
+              <a href="#" onclick="openPDF('docs/tuto-docker.pdf')" class="dropdown-item">🐳 Docker & Portainer</a>
+              <a href="#" onclick="openPDF('docs/tuto-lynis.pdf')" class="dropdown-item">🛡️ Audit avec Lynis</a>
+            </div>
+          </div>
+          
+          <div class="nav-item">
+            <button class="text-gray-700 hover:text-purple-600 transition-colors flex items-center gap-1">
+              Réseau <span class="text-xs">▼</span>
+            </button>
+            <div class="dropdown">
+              <a href="#" onclick="openPDF('docs/tuto-vlan-cisco.pdf')" class="dropdown-item">🔀 VLANs Cisco</a>
+              <a href="#" onclick="openPDF('docs/tuto-routage.pdf')" class="dropdown-item">🛣️ Routage inter-VLAN</a>
+              <a href="#" onclick="openPDF('docs/tuto-nat.pdf')" class="dropdown-item">🌍 Configuration NAT</a>
+              <a href="#" onclick="openPDF('docs/tuto-pfsense.pdf')" class="dropdown-item">🔥 pfSense configuration</a>
+            </div>
+          </div>
+          
+          <div class="nav-item">
+            <button class="text-gray-700 hover:text-purple-600 transition-colors flex items-center gap-1">
+              Virtualisation <span class="text-xs">▼</span>
+            </button>
+            <div class="dropdown">
+              <a href="#" onclick="openPDF('docs/tuto-proxmox-install.pdf')" class="dropdown-item">☁️ Installation Proxmox</a>
+              <a href="#" onclick="openPDF('docs/tuto-proxmox-vm.pdf')" class="dropdown-item">💻 Création VMs</a>
+              <a href="#" onclick="openPDF('docs/tuto-proxmox-backup.pdf')" class="dropdown-item">💾 Sauvegardes Proxmox</a>
+            </div>
+          </div>
+          
+          <div class="nav-item">
+            <button class="text-gray-700 hover:text-purple-600 transition-colors flex items-center gap-1">
+              Sécurité <span class="text-xs">▼</span>
+            </button>
+            <div class="dropdown">
+              <a href="#" onclick="openPDF('docs/tuto-vpn-openvpn.pdf')" class="dropdown-item">🔐 VPN OpenVPN</a>
+              <a href="#" onclick="openPDF('docs/tuto-suricata.pdf')" class="dropdown-item">🚨 IDS/IPS Suricata</a>
+              <a href="#" onclick="openPDF('docs/tuto-pingcastle.pdf')" class="dropdown-item">🔍 Audit PingCastle</a>
+              <a href="#" onclick="openPDF('docs/tuto-firewall.pdf')" class="dropdown-item">🛡️ Configuration Firewall</a>
+            </div>
+          </div>
+          
+          <div class="nav-item">
+            <button class="text-gray-700 hover:text-purple-600 transition-colors flex items-center gap-1">
+              Outils <span class="text-xs">▼</span>
+            </button>
+            <div class="dropdown">
+              <a href="#" onclick="openPDF('docs/tuto-glpi.pdf')" class="dropdown-item">🎫 GLPI Helpdesk</a>
+              <a href="#" onclick="openPDF('docs/tuto-nextcloud.pdf')" class="dropdown-item">☁️ Nextcloud</a>
+              <a href="#" onclick="openPDF('docs/tuto-zabbix.pdf')" class="dropdown-item">📊 Zabbix Supervision</a>
+              <a href="#" onclick="openPDF('docs/tuto-fog-project.pdf')" class="dropdown-item">💿 FOG Project</a>
+            </div>
+          </div>
+          
+          <a href="#contact" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Contact</a>
+        </nav>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 hover:bg-gray-100 rounded-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Barre défilante -->
+    <div class="scrolling-banner text-white text-sm py-2 font-semibold">
+      <div class="scrolling-content">
+        Windows Server 2025 • Active Directory • Proxmox VE • pfSense • Cisco IOS • Linux Debian • Docker • GLPI • Nextcloud • Zabbix • VPN • VLAN • IDS/IPS • Stormshield • FOG Project • GPO • DNS/DHCP • NAT • Virtualisation •
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden border-t bg-white">
+      <div class="px-6 py-4 space-y-2">
+        <a href="index.html" class="block py-2 text-gray-700 hover:text-purple-600">← Portfolio</a>
+        
+        <div>
+          <button onclick="toggleMobileDropdown('mobile-windows')" class="w-full text-left py-2 text-gray-700 font-semibold flex items-center justify-between">
+            Windows Server <span class="text-xs">▼</span>
+          </button>
+          <div id="mobile-windows" class="mobile-dropdown pl-4">
+            <a href="#" onclick="openPDF('docs/tuto-ad.pdf')" class="block py-2 text-sm text-gray-600">Active Directory</a>
+            <a href="#" onclick="openPDF('docs/tuto-gpo.pdf')" class="block py-2 text-sm text-gray-600">GPO</a>
+            <a href="#" onclick="openPDF('docs/tuto-dns-dhcp.pdf')" class="block py-2 text-sm text-gray-600">DNS & DHCP</a>
+          </div>
+        </div>
+        
+        <div>
+          <button onclick="toggleMobileDropdown('mobile-linux')" class="w-full text-left py-2 text-gray-700 font-semibold flex items-center justify-between">
+            Linux <span class="text-xs">▼</span>
+          </button>
+          <div id="mobile-linux" class="mobile-dropdown pl-4">
+            <a href="#" onclick="openPDF('docs/tuto-debian.pdf')" class="block py-2 text-sm text-gray-600">Installation Debian</a>
+            <a href="#" onclick="openPDF('docs/tuto-ssh.pdf')" class="block py-2 text-sm text-gray-600">Sécurisation SSH</a>
+            <a href="#" onclick="openPDF('docs/tuto-docker.pdf')" class="block py-2 text-sm text-gray-600">Docker</a>
+          </div>
+        </div>
+        
+        <div>
+          <button onclick="toggleMobileDropdown('mobile-network')" class="w-full text-left py-2 text-gray-700 font-semibold flex items-center justify-between">
+            Réseau <span class="text-xs">▼</span>
+          </button>
+          <div id="mobile-network" class="mobile-dropdown pl-4">
+            <a href="#" onclick="openPDF('docs/tuto-vlan.pdf')" class="block py-2 text-sm text-gray-600">VLANs Cisco</a>
+            <a href="#" onclick="openPDF('docs/tuto-routage.pdf')" class="block py-2 text-sm text-gray-600">Routage</a>
+            <a href="#" onclick="openPDF('docs/tuto-pfsense.pdf')" class="block py-2 text-sm text-gray-600">pfSense</a>
+          </div>
+        </div>
+        
+        <a href="#contact" class="block py-2 text-purple-600 font-semibold">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-12">
+    
+    <!-- Hero -->
+    <section class="glass rounded-2xl p-8 md:p-12 shadow-xl mb-12">
+      <div class="flex items-start gap-6">
+        <div class="text-6xl">📚</div>
+        <div class="flex-1">
+          <h1 class="text-4xl md:text-5xl font-black text-purple-900 mb-4">Tech-Tutos</h1>
+          <p class="text-lg text-gray-700 leading-relaxed mb-6">
+            Bienvenue sur <strong>Tech-Tutos</strong> ! Ce site regroupe mes tutoriels et documentations techniques réalisés dans le cadre de mon apprentissage en <strong>BTS SIO SISR</strong>.
+          </p>
+          
+          <div class="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-lg mb-6">
+            <p class="font-bold text-yellow-800 text-sm mb-2">⚠️ Disclaimer</p>
+            <ul class="text-xs text-yellow-700 space-y-1">
+              <li>• Documentations personnelles pour mon apprentissage</li>
+              <li>• Mises à disposition librement pour aider d'autres étudiants</li>
+              <li>• Téléchargement et consultation gratuits</li>
+              <li>• Je ne me tiens pas responsable de l'utilisation faite</li>
+              <li>• Site vitrine de mes compétences techniques</li>
+            </ul>
+          </div>
+          
+          <div class="flex flex-wrap gap-3">
+            <a href="index.html" class="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors">
+              ← Mon Portfolio
+            </a>
+            <a href="index.html#contact" class="px-6 py-3 border-2 border-purple-600 text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition-colors">
+              Me contacter
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tutoriels par catégorie -->
+    <section class="space-y-8">
+      
+      <!-- Windows Server -->
+      <div class="glass rounded-2xl p-8 shadow-xl">
+        <h2 class="text-2xl font-black text-purple-900 mb-6 flex items-center gap-3">
+          <span class="text-3xl">🪟</span> Windows Server
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="#" onclick="openPDF('docs/tuto-ad.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">Active Directory</div>
+            <div class="text-sm text-gray-600">Installation et configuration AD DS</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-gpo.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">Stratégies de groupe (GPO)</div>
+            <div class="text-sm text-gray-600">Configuration lecteurs réseau</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-dns-dhcp.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">DNS & DHCP</div>
+            <div class="text-sm text-gray-600">Configuration services réseau</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-fsrm.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">FSRM - Quotas</div>
+            <div class="text-sm text-gray-600">Gestion quotas disque</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Linux -->
+      <div class="glass rounded-2xl p-8 shadow-xl">
+        <h2 class="text-2xl font-black text-purple-900 mb-6 flex items-center gap-3">
+          <span class="text-3xl">🐧</span> Linux
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="#" onclick="openPDF('docs/tuto-debian.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">Installation Debian 13</div>
+            <div class="text-sm text-gray-600">Guide complet installation</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-ssh.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">Sécurisation SSH</div>
+            <div class="text-sm text-gray-600">Authentification par clé</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-docker.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">Docker & Portainer</div>
+            <div class="text-sm text-gray-600">Conteneurisation</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-lynis.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">Audit Lynis</div>
+            <div class="text-sm text-gray-600">Audit sécurité système</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Réseau -->
+      <div class="glass rounded-2xl p-8 shadow-xl">
+        <h2 class="text-2xl font-black text-purple-900 mb-6 flex items-center gap-3">
+          <span class="text-3xl">🌐</span> Réseau
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="#" onclick="openPDF('docs/tuto-vlan.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">VLANs Cisco</div>
+            <div class="text-sm text-gray-600">Configuration Catalyst</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-routage.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">Routage inter-VLAN</div>
+            <div class="text-sm text-gray-600">Configuration routage</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-nat.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">NAT / PAT</div>
+            <div class="text-sm text-gray-600">Configuration NAT overload</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-pfsense.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">pfSense HA</div>
+            <div class="text-sm text-gray-600">Haute disponibilité CARP</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Virtualisation -->
+      <div class="glass rounded-2xl p-8 shadow-xl">
+        <h2 class="text-2xl font-black text-purple-900 mb-6 flex items-center gap-3">
+          <span class="text-3xl">☁️</span> Virtualisation
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="#" onclick="openPDF('docs/tuto-proxmox-install.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">Installation Proxmox VE</div>
+            <div class="text-sm text-gray-600">Configuration hyperviseur</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-proxmox-vm.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">Création VMs</div>
+            <div class="text-sm text-gray-600">Windows & Linux</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Sécurité -->
+      <div class="glass rounded-2xl p-8 shadow-xl">
+        <h2 class="text-2xl font-black text-purple-900 mb-6 flex items-center gap-3">
+          <span class="text-3xl">🔒</span> Sécurité
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="#" onclick="openPDF('docs/tuto-vpn.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">VPN OpenVPN</div>
+            <div class="text-sm text-gray-600">Accès distant sécurisé</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-suricata.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">IDS/IPS Suricata</div>
+            <div class="text-sm text-gray-600">Détection intrusions</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-pingcastle.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">Audit PingCastle</div>
+            <div class="text-sm text-gray-600">Analyse vulnérabilités AD</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Outils -->
+      <div class="glass rounded-2xl p-8 shadow-xl">
+        <h2 class="text-2xl font-black text-purple-900 mb-6 flex items-center gap-3">
+          <span class="text-3xl">🛠️</span> Outils
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="#" onclick="openPDF('docs/tuto-glpi.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">GLPI Helpdesk</div>
+            <div class="text-sm text-gray-600">Gestion tickets + LDAP</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-nextcloud.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">Nextcloud</div>
+            <div class="text-sm text-gray-600">Cloud privé</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-zabbix.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">Zabbix</div>
+            <div class="text-sm text-gray-600">Supervision infrastructure</div>
+          </a>
+          <a href="#" onclick="openPDF('docs/tuto-fog.pdf')" class="card glass p-5 rounded-xl hover:shadow-lg">
+            <div class="font-bold text-gray-800 mb-1">FOG Project</div>
+            <div class="text-sm text-gray-600">Déploiement OS multicast</div>
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="mt-12 glass rounded-2xl p-8 shadow-xl">
+      <h2 class="text-2xl font-black text-purple-900 mb-4">💬 Questions ou suggestions ?</h2>
+      <p class="text-gray-700 mb-6">Besoin d'aide ou d'un tutoriel sur un sujet spécifique ? Contacte-moi !</p>
+      <a href="mailto:mamadoualphaly0552@gmail.com" class="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors">
+        <span>📧</span> mamadoualphaly0552@gmail.com
+      </a>
+    </section>
+  </main>
+
+  <footer class="text-center text-white py-8 mt-12 bg-black/20">
+    <p class="font-bold">© <span id="footer-year"></span> Tech-Tutos — Mamadou Alpha LY</p>
+    <p class="text-sm opacity-80 mt-1">BTS SIO SISR • Documentation Technique</p>
+  </footer>
+
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+    
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+    
+    function toggleMobileDropdown(id) {
+      document.getElementById(id).classList.toggle('active');
+    }
+    
+    function openPDF(pdfPath) {
+      // Ouvre le PDF dans un nouvel onglet (consultable + téléchargeable)
+      window.open(pdfPath, '_blank');
+      return false;
+    }
+  </script>
+</body>
+</html>

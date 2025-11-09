@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MLY — Portfolio</title>
+  <meta name="description" content="Portfolio de Mamadou Alpha LY — BTS SIO SISR 2ème année — Réseaux & Systèmes" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(40px, -40px) rotate(180deg); }
+      66% { transform: translate(-30px, 30px) rotate(360deg); }
+    }
+    
+    @keyframes pulse-icon {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+    
+    body {
+      background-color: rgb(6, 44, 83);
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    #network-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.5;
+    }
+    
+    .floating-icon {
+      position: fixed;
+      font-size: 2rem;
+      pointer-events: none;
+      animation: float 20s ease-in-out infinite, pulse-icon 3s ease-in-out infinite;
+      z-index: 1;
+      opacity: 0.6;
+    }
+    
+    .glass { 
+      background: rgba(255,255,255,0.95); 
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+    
+    .card-hover {
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-15px) scale(1.03);
+      box-shadow: 0 30px 60px rgba(14, 165, 164, 0.4);
+    }
+    
+    .scroll-fade {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.9s ease;
+    }
+    
+    .scroll-fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .typing {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typing 2.5s steps(35) 0.5s forwards;
+      width: 0;
+    }
+    
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    
+    @media (max-width: 640px) { 
+      .typing { animation: none; white-space: normal; width: auto; }
+    }
+    
+    .accent-glow { 
+      color: #0ea5a4;
+      text-shadow: 0 0 30px rgba(14, 165, 164, 0.8), 0 0 60px rgba(14, 165, 164, 0.4);
+      font-weight: 900;
+    }
+    
+    .btn-glow {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    .btn-glow:hover::before {
+      width: 350px;
+      height: 350px;
+    }
+    
+    .project-card {
+      position: relative;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 35px 70px rgba(14, 165, 164, 0.5);
+    }
+    
+    .project-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out;
+    }
+    
+    .project-card.expanded .project-details {
+      max-height: 2000px;
+    }
+    
+    .project-card.expanded .toggle-icon {
+      transform: rotate(180deg);
+    }
+    
+    .toggle-icon {
+      transition: transform 0.3s ease;
+    }
+    
+    .tech-badge {
+      display: inline-block;
+      padding: 7px 16px;
+      background: linear-gradient(135deg, #0ea5a4, #06b6d4);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin: 5px;
+      transition: all 0.3s ease;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(14, 165, 164, 0.3);
+    }
+    
+    .tech-badge:hover {
+      transform: scale(1.2) rotate(-3deg);
+      box-shadow: 0 8px 25px rgba(14, 165, 164, 0.6);
+    }
+    
+    section { scroll-margin-top: 100px; position: relative; z-index: 2; }
+    
+    .timeline-visual {
+      position: relative;
+      padding: 40px 0;
+    }
+    
+    .timeline-line {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, #0ea5a4, #06b6d4, #0ea5a4, #06b6d4);
+      transform: translateX(-50%);
+    }
+    
+    @media (max-width: 768px) {
+      .timeline-line {
+        left: 20px;
+      }
+    }
+    
+    .timeline-item-visual {
+      position: relative;
+      margin-bottom: 60px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .timeline-item-visual:nth-child(odd) {
+      flex-direction: row;
+    }
+    
+    .timeline-item-visual:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    
+    @media (max-width: 768px) {
+      .timeline-item-visual:nth-child(even) {
+        flex-direction: row;
+      }
+    }
+    
+    .timeline-content {
+      width: 45%;
+      padding: 20px;
+    }
+    
+    @media (max-width: 768px) {
+      .timeline-content {
+        width: calc(100% - 60px);
+        margin-left: 60px;
+      }
+    }
+    
+    .timeline-dot-visual {
+      position: absolute;
+      left: 50%;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0ea5a4, #06b6d4);
+      transform: translateX(-50%);
+      box-shadow: 0 0 0 8px rgba(14, 165, 164, 0.2);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    
+    @media (max-width: 768px) {
+      .timeline-dot-visual {
+        left: 20px;
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 8px rgba(14, 165, 164, 0.2); }
+      50% { box-shadow: 0 0 0 15px rgba(14, 165, 164, 0.4); }
+    }
+    
+    .rss-item {
+      transition: all 0.3s ease;
+    }
+    
+    .rss-item:hover {
+      transform: translateX(10px);
+      background: rgba(14, 165, 164, 0.1);
+    }
+    
+    .social-link {
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.1);
+    }
+  </style>
+</head>
+<body class="text-gray-800 antialiased">
+  <canvas id="network-canvas"></canvas>
+  <div id="floating-icons"></div>
+
+  <header class="sticky top-0 z-50 glass shadow-2xl">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#hero" class="flex items-center gap-3 transform hover:scale-110 transition-all duration-300">
+        <div class="w-14 h-14 flex items-center justify-center bg-gradient-to-br from-teal-400 via-cyan-400 to-sky-500 text-white font-black rounded-xl shadow-2xl hover:shadow-cyan-500/50 transition-all text-lg">MLY</div>
+        <div class="hidden sm:block">
+          <div class="text-sm font-bold">Mamadou Alpha LY</div>
+          <div class="text-xs text-gray-600">Étudiant BTS SIO/SISR</div>
+        </div>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-5 text-sm font-semibold">
+        <a href="#a-propos" class="hover:text-teal-500 transition-colors">About me</a>
+        <a href="#projet-pro" class="hover:text-teal-500 transition-colors">Projet pro</a>
+        <a href="#parcours" class="hover:text-teal-500 transition-colors">Parcours</a>
+        <a href="#formation" class="hover:text-teal-500 transition-colors">Formation</a>
+        <a href="#competences" class="hover:text-teal-500 transition-colors">Compétences</a>
+        <a href="#projets" class="hover:text-teal-500 transition-colors">Projets</a>
+        <a href="tutoriels.html" class="hover:text-teal-500 transition-colors">Tutoriels</a>
+        <a href="#interets" class="hover:text-teal-500 transition-colors">Centres d'intérêt</a>
+        <a href="#contact" class="px-5 py-2.5 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-lg btn-glow transform hover:scale-110 transition-all shadow-xl">Contact</a>
+      </nav>
+
+      <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-md hover:bg-white/50 transition-colors">
+        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+
+    <div id="mobile-menu" class="hidden lg:hidden border-t glass">
+      <div class="px-6 py-4 flex flex-col gap-3 font-medium">
+        <a href="#a-propos" class="hover:text-teal-500">About</a>
+        <a href="#projet-pro" class="hover:text-teal-500">Projet pro</a>
+        <a href="#parcours" class="hover:text-teal-500">Parcours</a>
+        <a href="#formation" class="hover:text-teal-500">Formation</a>
+        <a href="#competences" class="hover:text-teal-500">Compétences</a>
+        <a href="#projets" class="hover:text-teal-500">Projets</a>
+        <a href="tutoriels.html" class="hover:text-teal-500">Tutoriels</a>
+        <a href="#veille" class="hover:text-teal-500">Veille</a>
+        <a href="#interets" class="hover:text-teal-500">Centres d'intérêt</a>
+        <a href="#contact" class="mt-2 px-4 py-2.5 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-lg inline-block w-max shadow-lg">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-12">
+    <section id="hero" class="grid md:grid-cols-3 gap-10 items-center mb-24">
+      <div class="md:col-span-2">
+        <h1 class="text-5xl md:text-6xl font-black leading-tight text-white mb-3">
+          Bonjour, je suis
+        </h1>
+        <div class="typing-container text-5xl md:text-6xl font-black mb-8">
+          <span class="typing accent-glow">Mamadou Alpha LY</span>
+        </div>
+        
+        <p class="mt-6 text-white text-lg scroll-fade leading-relaxed bg-slate-900/70 p-8 rounded-2xl backdrop-blur-sm border border-cyan-500/30 shadow-2xl">
+          Étudiant en <strong class="text-teal-400">BTS SIO — SISR (2ème année)</strong>, spécialisé en <strong class="text-cyan-400">administration système & réseaux</strong>. Passionné par la virtualisation, la sécurité réseau et l'automatisation.
+        </p>
+        
+        <div class="mt-8 flex gap-4 scroll-fade">
+          <a href="#projets" class="px-7 py-4 rounded-xl border-2 border-white bg-white/10 text-white font-bold hover:bg-white hover:text-teal-600 transition-all transform hover:scale-110 backdrop-blur-md shadow-2xl">
+            Mes projets →
+          </a>
+          <a href="#contact" class="px-7 py-4 rounded-xl bg-gradient-to-r from-teal-500 to-sky-500 text-white font-bold btn-glow transform hover:scale-110 transition-all shadow-2xl">
+            Contact ✉️
+          </a>
+        </div>
+
+        <div class="mt-10 grid grid-cols-2 gap-5 text-sm scroll-fade">
+          <div class="p-7 rounded-2xl glass shadow-2xl card-hover">
+            <div class="font-black text-xl text-teal-600 mb-2">🎯 Spécialité</div>
+            <div class="text-gray-700 text-sm"><strong>SISR</strong> — Systèmes & Réseaux</div>
+          </div>
+          <div class="p-7 rounded-2xl glass shadow-2xl card-hover">
+            <div class="font-black text-xl text-teal-600 mb-2">🚀 Objectif</div>
+            <div class="text-gray-700 text-xs mt-1"><strong>Stage</strong> / Jan-Fév 2026</div>
+            <div class="text-gray-700 text-xs mt-1"><strong>Alternance</strong> / Sept 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="flex flex-col items-center gap-5 text-center scroll-fade">
+        <div class="w-72 h-72 bg-gradient-to-br from-teal-400 via-cyan-400 to-sky-500 rounded-3xl overflow-hidden flex items-center justify-center shadow-2xl transform hover:scale-110 hover:rotate-6 transition-all duration-500 border-4 border-white/50">
+          <img src="images/profile.jpg" alt="Photo MLY" class="object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/400x400/0ea5a4/ffffff?text=MLY'" />
+        </div>
+        <div class="text-sm text-white font-bold bg-slate-900/70 px-8 py-4 rounded-full backdrop-blur-md border border-cyan-500/30 shadow-xl">
+          🎓 BTS SIO SISR — 2ème année
+        </div>
+      </aside>
+    </section>
+
+    <section id="a-propos" class="mb-24 scroll-fade">
+      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">📋 À propos</h2>
+      <div class="glass p-10 rounded-3xl shadow-2xl card-hover">
+        <p class="text-gray-800 leading-relaxed text-lg mb-4">
+          Étudiant en BTS SIO SISR 2ème année et auto-entrepreneur. Débrouillard et autonome, j'ai créé mon auto-entreprise en arrivant en France (2023) pour collaborer avec des sociétés d'intérim en Île-de-France.
+        </p>
+        <p id="intro-text" class="text-gray-700 leading-relaxed">
+          Expériences variées : mission en Corse en totale autonomie, commerce international (Chine-Sénégal), projet de location de matériel logistique au Sénégal (en études de marché).
+          <span id="more-text" class="hidden">
+            <br><br>Motivé par l'apprentissage continu et l'évolution professionnelle, je combine études techniques et expérience entrepreneuriale pour développer des compétences solides en administration système & réseaux.
+          </span>
+        </p>
+        <button id="read-more-btn" class="mt-4 text-teal-600 font-bold hover:text-teal-700 transition-colors text-sm">
+          Lire plus →
+        </button>
+        
+        <hr class="my-8 border-gray-300">
+        
+        <div class="grid md:grid-cols-2 gap-5">
+          <div class="space-y-3 text-sm">
+            <p class="flex items-center gap-3">
+              <span class="text-2xl">📧</span>
+              <a href="mailto:mamadoualphaly0552@gmail.com" class="text-teal-600 hover:underline font-semibold">mamadoualphaly0552@gmail.com</a>
+            </p>
+            <p class="flex items-center gap-3">
+              <span class="text-2xl">📱</span>
+              <span class="font-semibold">+33 6 41 83 17 96</span>
+            </p>
+          </div>
+          
+          <div class="flex flex-col gap-3">
+            <a href="https://www.linkedin.com/in/mamadou-alpha-ly" target="_blank" class="flex items-center gap-3 p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-all social-link">
+              <span class="text-2xl">💼</span>
+              <strong class="text-sm">LinkedIn</strong>
+            </a>
+            
+            <a href="tutoriels.html" class="flex items-center gap-3 p-4 bg-purple-50 rounded-xl hover:bg-purple-100 transition-all social-link">
+              <span class="text-2xl">📚</span>
+              <strong class="text-sm">Mes Tutoriels</strong>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   <section id="projet-pro" class="mb-24 scroll-fade">
+      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">🎯 Projet professionnel</h2>
+      <div class="glass p-10 rounded-3xl shadow-2xl card-hover">
+        <p class="text-gray-800 leading-relaxed text-lg">
+        🎯 Mon objectif professionnel est de devenir <strong>administrateur système et réseau</strong> , en maîtrisant la conception, le déploiement et la <strong>sécurisation d’infrastructures</strong> complexes, sous <strong>Windows et Linux.</strong>
+            À long terme, j’ambitionne d’évoluer vers des postes à responsabilité technique (Responsable IT, Directeur des systèmes d’information) tout en développant mes propres <strong>projets entrepreneuriaux</strong> dans des domaines variés. <br><br>
+            Cette double vision — technicien et entrepreneur — reflète ma personnalité : curieux, autonome et toujours en quête de nouveaux défis.</p>
+      </div>
+    </section>
+
+    <section id="parcours" class="mb-24 scroll-fade">
+      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">💼 Parcours</h2>
+      <div class="timeline-visual">
+        <div class="timeline-line"></div>
+        <div id="timeline-container"></div>
+      </div>
+    </section>
+
+    <section id="formation" class="mb-24 scroll-fade">
+      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">🎓 Formation</h2>
+      <div id="formation-list" class="space-y-5"></div>
+    </section>
+
+    <section id="competences" class="mb-24 scroll-fade">
+      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">⚡ Compétences</h2>
+      <div id="skills" class="flex flex-wrap gap-3"></div>
+    </section>
+
+    <section id="projets" class="mb-24 scroll-fade">
+      <h2 class="text-5xl font-black mb-12 text-white drop-shadow-2xl">🚀 Projets réalisés (ou en cours...)</h2>
+      <div id="projects-container" class="space-y-6"></div>
+    </section>
+
+    <section id="downloads" class="mb-24 scroll-fade">
+      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">📄 CV</h2>
+      <div class="glass p-10 rounded-3xl shadow-2xl card-hover">
+        <div class="flex flex-wrap gap-5">
+          <a href="docs/CV-MLY.pdf" download class="px-8 py-4 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-xl btn-glow transform hover:scale-110 transition-all shadow-2xl font-bold text-lg flex items-center gap-3">
+            <span class="text-2xl">📥</span> Télécharger
+          </a>
+          <a href="docs/CV-MLY.pdf" target="_blank" class="px-8 py-4 border-3 border-teal-500 text-teal-600 rounded-xl hover:bg-teal-50 transition-all transform hover:scale-110 font-bold text-lg flex items-center gap-3 shadow-xl glass">
+            <span class="text-2xl">👁️</span> Voir
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="interets" class="mb-24 scroll-fade">
+      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">🎯 Centres d'intérêt</h2>
+      <div class="glass p-10 rounded-3xl shadow-2xl card-hover">
+        <div class="grid md:grid-cols-4 gap-6">
+          <div class="text-center p-6">
+            <div class="text-5xl mb-4">💻</div>
+            <h3 class="font-bold text-lg text-teal-600 mb-2">Technologies</h3>
+            <p class="text-gray-600 text-sm">Veille technologique, nouvelles solutions réseau, projets open-source</p>
+          </div>
+          <div class="text-center p-6">
+            <div class="text-5xl mb-4">📚</div>
+            <h3 class="font-bold text-lg text-teal-600 mb-2">Documentation</h3>
+            <p class="text-gray-600 text-sm">Création de tutoriels, documentation technique, partage de connaissances</p>
+          </div>
+          <div class="text-center p-6">
+            <div class="text-5xl mb-4">📖</div>
+            <h3 class="font-bold text-lg text-teal-600 mb-2">Histoire</h3>
+            <p class="text-gray-600 text-sm">Connaître son passé pour mieux évoluer !</p>
+          </div>
+          <div class="text-center p-6">
+            <div class="text-5xl mb-4">🚀</div>
+            <h3 class="font-bold text-lg text-teal-600 mb-2">Entrepreneuriat</h3>
+            <p class="text-gray-600 text-sm">Auto-entrepreneur, projets commerciaux, développement personnel</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="veille" class="mb-24 scroll-fade">
+      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">🔍 Veille Technologique</h2>
+      
+      <div class="glass p-8 rounded-3xl shadow-2xl mb-8">
+        <h3 class="font-black text-2xl text-teal-600 mb-4">📡 Mes sujets de veille</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="p-6 bg-teal-50 rounded-2xl">
+            <h4 class="font-bold text-lg mb-2">🔒 Cybersécurité Réseau</h4>
+            <p class="text-sm text-gray-600">IDS/IPS, pare-feu, VPN, Zero Trust, audit de sécurité</p>
+          </div>
+          <div class="p-6 bg-blue-50 rounded-2xl">
+            <h4 class="font-bold text-lg mb-2">☁️ Virtualisation & Cloud</h4>
+            <p class="text-sm text-gray-600">Proxmox, VMware, conteneurisation, automatisation</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass p-8 rounded-3xl shadow-2xl">
+        <h3 class="font-black text-xl text-gray-800 mb-6">📰 Dernières actualités <span class="text-sm text-gray-500 font-normal">(Mise à jour automatique)</span></h3>
+        <div id="rss-feed" class="space-y-3">
+          <p class="text-gray-500 text-center py-8">Chargement des actualités...</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="mb-24 scroll-fade">
+      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">✉️ Contact</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST" class="space-y-5 glass p-10 rounded-3xl shadow-2xl">
+          <label class="block">
+            <span class="text-sm font-black text-gray-700 mb-2 block">Nom</span>
+            <input name="name" required class="block w-full rounded-xl border-2 border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-200 transition-all p-4 font-medium" placeholder="Votre nom" />
+          </label>
+          <label class="block">
+            <span class="text-sm font-black text-gray-700 mb-2 block">Email</span>
+            <input type="email" name="email" required class="block w-full rounded-xl border-2 border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-200 transition-all p-4 font-medium" placeholder="votre@email.com" />
+          </label>
+          <label class="block">
+            <span class="text-sm font-black text-gray-700 mb-2 block">Message</span>
+            <textarea name="message" rows="6" required class="block w-full rounded-xl border-2 border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-200 transition-all p-4 font-medium" placeholder="Votre message..."></textarea>
+          </label>
+          <label class="flex items-start gap-3 text-sm text-gray-700">
+            <input type="checkbox" name="rgpd" required class="mt-1 w-5 h-5" /> 
+            <span>J'accepte que mes données soient utilisées pour répondre à ce message (RGPD)</span>
+          </label>
+          <button type="submit" class="w-full px-8 py-5 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-xl font-black btn-glow transform hover:scale-105 transition-all shadow-2xl text-xl">
+            Envoyer 🚀
+          </button>
+          <div id="form-status" class="text-sm text-center font-bold"></div>
+        </form>
+
+        <div class="space-y-6">
+          <div class="glass p-10 rounded-3xl shadow-2xl card-hover">
+            <h3 class="font-black text-2xl mb-6 text-teal-600">📬 Coordonnées</h3>
+            <div class="space-y-4">
+              <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                <span class="text-3xl">📧</span>
+                <a href="mailto:mamadoualphaly0552@gmail.com" class="text-teal-600 hover:underline font-semibold text-sm">mamadoualphaly0552@gmail.com</a>
+              </div>
+              
+              <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                <span class="text-3xl">📱</span>
+                <span class="font-semibold">+33 6 41 83 17 96</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass p-8 rounded-3xl shadow-2xl card-hover">
+            <h3 class="font-black text-xl mb-4 text-teal-600">🔗 Liens</h3>
+            <div class="space-y-3">
+              <a href="https://www.linkedin.com/in/mamadou-alpha-ly" target="_blank" class="flex items-center gap-3 p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-all social-link">
+                <span class="text-2xl">💼</span>
+                <strong class="text-sm">LinkedIn</strong>
+              </a>
+              
+              <a href="tutoriels.html" class="flex items-center gap-3 p-4 bg-purple-50 rounded-xl hover:bg-purple-100 transition-all social-link">
+                <span class="text-2xl">📚</span>
+                <strong class="text-sm">Tutoriels</strong>
+              </a>
+            </div>
+          </div>
+
+          <div class="glass p-6 rounded-3xl shadow-2xl">
+            <h4 class="font-bold text-sm mb-3 text-gray-700">📜 Mentions légales & RGPD</h4>
+            <p class="text-xs text-gray-600 leading-relaxed">Ce site est un portfolio personnel. Les données envoyées via le formulaire sont conservées uniquement pour répondre à votre message. Aucune donnée n'est partagée avec des tiers. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="text-center text-white py-10 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-t border-cyan-500/30">
+    <div class="mb-4 text-3xl">🚀</div>
+    <p class="font-bold text-lg">© <span id="footer-year"></span> Mamadou Alpha LY</p>
+    <p class="text-sm text-gray-400 mt-2">Portfolio — BTS SIO SISR</p>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById('network-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let mouseX = -1000;
+    let mouseY = -1000;
+
+    canvas.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      mouseX = -1000;
+      mouseY = -1000;
+    });
+
+    class Node {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.8;
+        this.vy = (Math.random() - 0.5) * 0.8;
+        this.radius = 3;
+      }
+      update() {
+        const dx = this.x - mouseX;
+        const dy = this.y - mouseY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < 150) {
+          const force = (150 - distance) / 150;
+          this.vx += (dx / distance) * force * 2;
+          this.vy += (dy / distance) * force * 2;
+        }
+        
+        this.vx *= 0.95;
+        this.vy *= 0.95;
+        
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        
+        this.x = Math.max(0, Math.min(canvas.width, this.x));
+        this.y = Math.max(0, Math.min(canvas.height, this.y));
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(14, 165, 164, 0.8)';
+        ctx.fill();
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = 'rgba(14, 165, 164, 0.5)';
+      }
+    }
+
+    const nodes = [];
+    for (let i = 0; i < 60; i++) nodes.push(new Node());
+
+    function drawLines() {
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 150) {
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = `rgba(6, 182, 212, ${1 - distance / 150})`;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      nodes.forEach(node => { node.update(); node.draw(); });
+      drawLines();
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    const iconsContainer = document.getElementById('floating-icons');
+    const icons = ['🖥️', '🌐', '🔒', '⚡', '🛡️', '📡', '🔧', '🔌', '🌟'];
+    for (let i = 0; i < 10; i++) {
+      const icon = document.createElement('div');
+      icon.className = 'floating-icon';
+      icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+      icon.style.left = Math.random() * 100 + '%';
+      icon.style.top = Math.random() * 100 + '%';
+      icon.style.animationDelay = Math.random() * 15 + 's';
+      icon.style.animationDuration = (Math.random() * 15 + 15) + 's';
+      iconsContainer.appendChild(icon);
+    }
+
+    document.getElementById('mobile-menu-btn').addEventListener('click', function(){
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+
+    document.getElementById('read-more-btn').addEventListener('click', function() {
+      const more = document.getElementById('more-text');
+      more.classList.toggle('hidden');
+      this.textContent = more.classList.contains('hidden') ? 'Lire plus →' : 'Réduire ↑';
+    });
+
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+    const data = {
+      "parcours": [
+        {"date":"2025-2026","icon":"🎓","titre":"BTS SIO SISR 2ème année","desc":"Cybersécurité, infrastructures avancées, projets pro"},
+        {"date":"2024-2025","icon":"🍔","titre":"BTS SIO SISR 1ère année + Burger King","desc":"Système/réseau, virtualisation, AD + job étudiant restauration"},
+        {"date":"2024","icon":"🏝️","titre":"Mission Corse","desc":"Autonomie complète, développement persévérance"},
+        {"date":"Depuis 2023","icon":"💼","titre":"Auto-entrepreneur","desc":"Collaboration sociétés intérim Île-de-France"}
+        
+      ],
+      "formation": [
+        {"date":"2024-2025","titre":"BTS SIO SISR (2ème année)","desc":"Lycée Notre Dame de la Providence, Avranches, France"},
+        {"date":"2023-2024","titre":"BTS SIO SISR (1ère année)","desc":"Lycée Notre Dame de la Providence, Avranches, France"},
+        {"date":"2021-2022","titre":"Baccalauréat","desc":"Lycée Lamine Gueye, Dakar, Sénégal"}
+      ],
+      "competences": [
+        "Proxmox VE","Windows Server 2025","Active Directory","pfSense/OPNsense","Cisco (3750/2960)","VLAN/Routage","VPN","Proxy (SQUID)","GLPI","Nextcloud","Docker","Linux Debian","PowerShell/Bash","LDAP","Audit (PingCastle/Lynis)","DMZ","FOG Project"
+      ],
+      "projets": [
+        {
+          "titre":"LAB'SIO — Infrastructure Réseau Sécurisée en binôme",
+          "badge":"EN COURS",
+          "badgeColor":"green",
+          "icon":"🔒",
+          "resume":"Infrastructure professionnelle complète avec segmentation réseau, DMZ, VPN, IDS/IPS, supervision et audit de sécurité.",
+          "techs":["Proxmox","pfSense","Cisco 3750/2960","VLAN","Windows Server 2025","Active Directory","VPN","IDS/IPS","Zabbix","Reverse Proxy","Portail Captif","Stormshield"],
+          "points":[
+            "2 serveurs Proxmox + switches Cisco + firewall Stormshield",
+            "pfSense avec 4 zones (WAN/LAN/DMZ/BLUE) + VLANs multiples",
+            "Serveur Web en DMZ avec reverse proxy multi-sites",
+            "WiFi pédagogique avec portail captif",
+            "VPN OpenVPN/Wireguard pour administration distante",
+            "IDS/IPS Suricata/Wazuh + filtrage Squid/pfBlocker",
+            "Audit PingCastle (AD) + Lynis (Linux)",
+            "Supervision Zabbix temps réel"
+          ],
+          "competences":"Cybersécurité • Segmentation réseau • VPN • IDS/IPS • Supervision • Audit"
+        },
+        {
+          "titre":"APAEIA — Infrastructure Active Directory",
+          "badge":"BTS SIO 1",
+          "badgeColor":"blue",
+          "icon":"🏥",
+          "resume":"Rénovation complète infrastructure association (5 établissements) : AD, GPO, helpdesk GLPI, cloud privé Nextcloud.",
+          "techs":["Proxmox","IpFire","Windows Server 2022","Active Directory","GPO","FSRM","GLPI","Nextcloud","LDAP","Debian"],
+          "points":[
+            "Audit infrastructure obsolète (Windows Server 2008 R2)",
+            "AD complet avec domaine apaeia.fr, OU, groupes, utilisateurs",
+            "Lecteurs réseau automatiques via GPO + quotas FSRM",
+            "Serveur d'impression centralisé",
+            "Helpdesk GLPI avec liaison LDAP",
+          ],
+          "competences":"Active Directory • GPO • Helpdesk • LDAP "
+        },
+        {
+          "titre":"Déploiement OS avec FOG Project",
+          "badge":"STAGE 1ère",
+          "badgeColor":"purple",
+          "icon":"💾",
+          "resume":"Automatisation déploiement Windows 11 en multicast sur 20 postes.",
+          "techs":["FOG Project","Windows 11","PXE Boot","Multicast","DHCP/TFTP"],
+          "points":[
+            "Installation serveur FOG sur Linux",
+            "Configuration PXE Boot (DHCP/TFTP)",
+            "Création image master Windows 11",
+            "Déploiement multicast simultané",
+            "Gain de temps considérable vs déploiement unitaire"
+          ],
+          "competences":"Déploiement automatisé • PXE • Multicast • Imaging"
+        }
+      ]
+    };
+
+    const timelineContainer = document.getElementById('timeline-container');
+    data.parcours.forEach((item, index) => {
+      const el = document.createElement('div');
+      el.className = 'timeline-item-visual scroll-fade';
+      el.innerHTML = `
+        <div class="timeline-dot-visual">${item.icon}</div>
+        <div class="timeline-content glass p-6 rounded-2xl shadow-xl card-hover">
+          <div class="font-black text-sm text-teal-600 mb-2">${item.date}</div>
+          <div class="font-bold text-lg text-gray-800">${item.titre}</div>
+          <div class="text-sm text-gray-600 mt-2">${item.desc}</div>
+        </div>
+      `;
+      timelineContainer.appendChild(el);
+      observer.observe(el);
+    });
+
+    const fList = document.getElementById('formation-list');
+    data.formation.forEach(f => {
+      const el = document.createElement('div');
+      el.className = 'glass p-8 rounded-2xl shadow-2xl card-hover scroll-fade';
+      el.innerHTML = `
+        <div class="flex flex-col md:flex-row gap-6 items-start">
+          <div class="text-sm font-black text-white bg-teal-500 px-5 py-2 rounded-lg">${f.date}</div>
+          <div class="flex-1">
+            <div class="font-black text-xl text-gray-800">${f.titre}</div>
+            <div class="text-sm text-gray-600 mt-2">${f.desc}</div>
+          </div>
+        </div>
+      `;
+      fList.appendChild(el);
+      observer.observe(el);
+    });
+
+    const skills = document.getElementById('skills');
+    data.competences.forEach(s => {
+      const d = document.createElement('div');
+      d.className = 'tech-badge scroll-fade';
+      d.textContent = s;
+      skills.appendChild(d);
+      observer.observe(d);
+    });
+
+    const projectsContainer = document.getElementById('projects-container');
+    data.projets.forEach(projet => {
+      const badgeColors = {
+        green: 'bg-green-100 text-green-600',
+        blue: 'bg-blue-100 text-blue-600',
+        purple: 'bg-purple-100 text-purple-600'
+      };
+      
+      const card = document.createElement('div');
+      card.className = 'project-card glass p-8 rounded-3xl shadow-2xl scroll-fade';
+      card.innerHTML = `
+        <div class="flex items-start justify-between mb-4">
+          <div class="flex items-center gap-4 flex-1">
+            <span class="text-5xl">${projet.icon}</span>
+            <div>
+              <h3 class="text-2xl font-black text-teal-600">${projet.titre}</h3>
+              <span class="text-xs ${badgeColors[projet.badgeColor]} px-3 py-1 rounded-full font-bold inline-block mt-2">${projet.badge}</span>
+            </div>
+          </div>
+          <button class="toggle-btn text-3xl text-teal-600 transform transition-transform toggle-icon">▼</button>
+        </div>
+        
+        <p class="text-gray-700 leading-relaxed mb-4">${projet.resume}</p>
+        
+        <div class="mb-4">
+          ${projet.techs.map(t => `<span class="tech-badge">${t}</span>`).join('')}
+        </div>
+        
+        <div class="project-details">
+          <hr class="my-6 border-gray-300">
+          <h4 class="font-bold text-lg mb-4 text-gray-800">🎯 Réalisations :</h4>
+          <ul class="space-y-3 mb-6">
+            ${projet.points.map(p => `<li class="flex gap-3 text-sm text-gray-700"><span class="text-teal-500 font-bold">→</span><span>${p}</span></li>`).join('')}
+          </ul>
+          <div class="p-4 bg-teal-50 rounded-xl">
+            <p class="text-sm text-gray-700"><strong class="text-teal-600">Compétences :</strong> ${projet.competences}</p>
+          </div>
+        </div>
+      `;
+      
+      const toggleBtn = card.querySelector('.toggle-btn');
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        card.classList.toggle('expanded');
+      });
+      
+      projectsContainer.appendChild(card);
+      observer.observe(card);
+    });
+
+    async function loadRSSFeed() {
+      const feedContainer = document.getElementById('rss-feed');
+      const RSS_FEEDS = [
+        "https://www.it-connect.fr/feed/",
+        "https://www.zdnet.fr/feeds/rss/actualites/informatique/",
+        "https://www.cert.ssi.gouv.fr/feed/"
+      ];
+      
+      feedContainer.innerHTML = '<p class="text-gray-500 text-center py-4">⏳ Chargement des actualités...</p>';
+      
+      try {
+        const allArticles = [];
+        
+        for (const feed of RSS_FEEDS) {
+          try {
+            const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
+            const data = await response.json();
+            
+            if (data.status === 'ok' && data.items) {
+              const articles = data.items.slice(0, 2);
+              articles.forEach(article => {
+                allArticles.push({
+                  title: article.title,
+                  description: article.description || article.content || '',
+                  link: article.link,
+                  pubDate: article.pubDate,
+                  feedTitle: data.feed.title
+                });
+              });
+            }
+          } catch (err) {
+            console.error('Erreur flux:', feed, err);
+          }
+        }
+        
+        if (allArticles.length > 0) {
+          feedContainer.innerHTML = allArticles.map(article => {
+            const date = new Date(article.pubDate);
+            const timeAgo = getTimeAgo(date);
+            const shortDesc = article.description.replace(/<[^>]*>/g, '').split(' ').slice(0, 25).join(' ') + '...';
+            
+            return `
+              <a href="${article.link}" target="_blank" class="rss-item block p-4 rounded-xl hover:bg-teal-50 transition-all border border-gray-200">
+                <div class="flex items-start gap-3">
+                  <span class="text-2xl">📰</span>
+                  <div class="flex-1">
+                    <div class="font-bold text-gray-800 text-sm mb-1">${article.title}</div>
+                    <p class="text-xs text-gray-600 mb-2">${shortDesc}</p>
+                    <div class="text-xs text-gray-500">${article.feedTitle} • ${timeAgo}</div>
+                  </div>
+                  <span class="text-teal-500">→</span>
+                </div>
+              </a>
+            `;
+          }).join('');
+        } else {
+          feedContainer.innerHTML = `
+            <a href="https://www.it-connect.fr/" target="_blank" class="rss-item block p-4 rounded-xl hover:bg-teal-50 transition-all border border-gray-200">
+              <div class="flex items-start gap-3">
+                <span class="text-2xl">💻</span>
+                <div class="flex-1">
+                  <div class="font-bold text-gray-800 text-sm mb-1">IT-Connect — Actualités IT & Réseau</div>
+                  <div class="text-xs text-gray-500">Tutoriels et actualités infrastructure</div>
+                </div>
+                <span class="text-teal-500">→</span>
+              </div>
+            </a>
+            <a href="https://www.zdnet.fr/actualites/informatique/" target="_blank" class="rss-item block p-4 rounded-xl hover:bg-teal-50 transition-all border border-gray-200">
+              <div class="flex items-start gap-3">
+                <span class="text-2xl">📰</span>
+                <div class="flex-1">
+                  <div class="font-bold text-gray-800 text-sm mb-1">ZDNet — Actualités Informatique</div>
+                  <div class="text-xs text-gray-500">News tech et cybersécurité</div>
+                </div>
+                <span class="text-teal-500">→</span>
+              </div>
+            </a>
+            <a href="https://www.cert.ssi.gouv.fr/" target="_blank" class="rss-item block p-4 rounded-xl hover:bg-teal-50 transition-all border border-gray-200">
+              <div class="flex items-start gap-3">
+                <span class="text-2xl">🔒</span>
+                <div class="flex-1">
+                  <div class="font-bold text-gray-800 text-sm mb-1">CERT-FR — Cybersécurité</div>
+                  <div class="text-xs text-gray-500">Alertes et bulletins de sécurité</div>
+                </div>
+                <span class="text-teal-500">→</span>
+              </div>
+            </a>
+          `;
+        }
+      } catch (error) {
+        console.error('Erreur RSS:', error);
+        feedContainer.innerHTML = '<p class="text-gray-500 text-center py-4">Erreur de chargement. <a href="https://www.it-connect.fr/" target="_blank" class="text-teal-600 underline">Voir IT-Connect</a></p>';
+      }
+    }
+
+    function getTimeAgo(date) {
+      const seconds = Math.floor((new Date() - date) / 1000);
+      const intervals = {
+        'an': 31536000,
+        'mois': 2592000,
+        'jour': 86400,
+        'heure': 3600,
+        'minute': 60
+      };
+      
+      for (const [name, value] of Object.entries(intervals)) {
+        const interval = Math.floor(seconds / value);
+        if (interval >= 1) {
+          return `Il y a ${interval} ${name}${interval > 1 && name !== 'mois' ? 's' : ''}`;
+        }
+      }
+      return 'À l\'instant';
+    }
+
+    loadRSSFeed();
+
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const status = document.getElementById('form-status');
+      status.textContent = '📤 Envoi...';
+      status.style.color = '#0ea5a4';
+      
+      setTimeout(() => {
+        status.textContent = '✅ Message envoyé !';
+        status.style.color = '#10b981';
+        this.reset();
+        setTimeout(() => status.textContent = '', 5000);
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
