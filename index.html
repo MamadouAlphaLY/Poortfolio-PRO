@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MLY — Portfolio</title>
   <meta name="description" content="Portfolio de Mamadou Alpha LY — BTS SIO SISR 2ème année — Réseaux & Systèmes" />
+  
+  <!-- FAVICON -->
+  <link rel="icon" type="image/svg+xml" href="favicon_svg.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @keyframes gradient {
@@ -269,6 +275,279 @@
     .social-link:hover {
       transform: translateY(-5px) scale(1.1);
     }
+
+    /* Bouton Retour en haut */
+    #scroll-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #0ea5a4, #06b6d4);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(14, 165, 164, 0.5);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #scroll-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #scroll-to-top:hover {
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 12px 30px rgba(14, 165, 164, 0.7);
+    }
+
+    #scroll-to-top:active {
+      transform: translateY(-4px) scale(1.05);
+    }
+
+    @media (max-width: 640px) {
+      #scroll-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+      }
+    }
+
+    /* ========== STYLES COMPÉTENCES (DESIGN POURCENTAGE) ========== */
+    .skill-category {
+      margin-bottom: 40px;
+    }
+
+    .skill-item {
+      position: relative;
+      margin-bottom: 20px;
+      padding: 16px;
+      background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .skill-item:hover {
+      transform: translateX(8px);
+      border-color: #0ea5a4;
+      box-shadow: 0 8px 25px rgba(14, 165, 164, 0.25);
+      background: linear-gradient(135deg, #ffffff 0%, #cffafe 100%);
+    }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .skill-name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #1e293b;
+    }
+
+    .skill-percentage {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #0ea5a4;
+      min-width: 60px;
+      text-align: right;
+    }
+
+    .skill-bar-container {
+      width: 100%;
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0ea5a4, #06b6d4);
+      border-radius: 20px;
+      transition: width 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      width: 0;
+      box-shadow: 0 0 15px rgba(14, 165, 164, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .skill-item.visible .skill-bar-fill {
+      width: var(--skill-width);
+    }
+
+    /* ========== CARROUSEL PROJETS (RÉPARÉ AVEC SCROLL-SNAP) ========== */
+    .projects-carousel-container {
+      position: relative;
+      overflow: visible;
+      padding: 20px 0;
+      margin: 0 80px;
+    }
+
+    @media (max-width: 768px) {
+      .projects-carousel-container {
+        margin: 0 60px;
+      }
+    }
+
+    .projects-carousel {
+      display: flex;
+      gap: 30px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-snap-type: x mandatory;
+      padding: 10px 0;
+    }
+
+    .projects-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .carousel-project-card {
+      min-width: calc(100% - 40px);
+      flex-shrink: 0;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+    }
+
+    @media (min-width: 768px) {
+      .carousel-project-card {
+        min-width: 700px;
+        max-width: 750px;
+      }
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, #0ea5a4, #06b6d4);
+      color: white;
+      border: 3px solid rgba(255,255,255,0.9);
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 200;
+      box-shadow: 0 10px 30px rgba(14, 165, 164, 0.6);
+      transition: all 0.3s ease;
+    }
+
+    .carousel-arrow:hover {
+      transform: translateY(-50%) scale(1.15);
+      box-shadow: 0 15px 40px rgba(14, 165, 164, 0.8);
+      background: linear-gradient(135deg, #06b6d4, #0ea5a4);
+    }
+
+    .carousel-arrow:active {
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .carousel-arrow.prev {
+      left: -80px;
+    }
+
+    .carousel-arrow.next {
+      right: -80px;
+    }
+
+    @media (max-width: 768px) {
+      .carousel-arrow {
+        width: 50px;
+        height: 50px;
+      }
+      
+      .carousel-arrow.prev {
+        left: -60px;
+      }
+      
+      .carousel-arrow.next {
+        right: -60px;
+      }
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background: linear-gradient(135deg, #0ea5a4, #06b6d4);
+      width: 40px;
+      border-radius: 6px;
+    }
+
+    .carousel-dot:hover {
+      background: rgba(255,255,255,0.5);
+    }
+
+    .doc-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      color: white;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+      margin-top: 12px;
+    }
+
+    .doc-button:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+    }
   </style>
 </head>
 <body class="text-gray-800 antialiased">
@@ -286,14 +565,13 @@
       </a>
 
       <nav class="hidden lg:flex items-center gap-5 text-sm font-semibold">
-        <a href="#a-propos" class="hover:text-teal-500 transition-colors">About me</a>
+        <a href="#a-propos" class="hover:text-teal-500 transition-colors">Profil</a>
         <a href="#projet-pro" class="hover:text-teal-500 transition-colors">Projet pro</a>
-        <a href="#parcours" class="hover:text-teal-500 transition-colors">Parcours</a>
-        <a href="#formation" class="hover:text-teal-500 transition-colors">Formation</a>
+        <a href="#parcours" class="hover:text-teal-500 transition-colors">Parcours & Formation</a>
         <a href="#competences" class="hover:text-teal-500 transition-colors">Compétences</a>
-        <a href="#projets" class="hover:text-teal-500 transition-colors">Projets</a>
-        <a href="tutoriels.html" class="hover:text-teal-500 transition-colors">Tutoriels</a>
+        <a href="#projets" class="hover:text-teal-500 transition-colors">Réalisations</a>
         <a href="#interets" class="hover:text-teal-500 transition-colors">Centres d'intérêt</a>
+        <a href="#" target="_blank" class="hover:text-teal-500 transition-colors">Veille</a>
         <a href="#contact" class="px-5 py-2.5 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-lg btn-glow transform hover:scale-110 transition-all shadow-xl">Contact</a>
       </nav>
 
@@ -304,23 +582,32 @@
 
     <div id="mobile-menu" class="hidden lg:hidden border-t glass">
       <div class="px-6 py-4 flex flex-col gap-3 font-medium">
-        <a href="#a-propos" class="hover:text-teal-500">About</a>
+        <a href="#a-propos" class="hover:text-teal-500">Profil</a>
         <a href="#projet-pro" class="hover:text-teal-500">Projet pro</a>
-        <a href="#parcours" class="hover:text-teal-500">Parcours</a>
-        <a href="#formation" class="hover:text-teal-500">Formation</a>
+        <a href="#parcours" class="hover:text-teal-500">Parcours & Formation</a>
         <a href="#competences" class="hover:text-teal-500">Compétences</a>
-        <a href="#projets" class="hover:text-teal-500">Projets</a>
-        <a href="tutoriels.html" class="hover:text-teal-500">Tutoriels</a>
-        <a href="#veille" class="hover:text-teal-500">Veille</a>
+        <a href="#projets" class="hover:text-teal-500">Réalisations</a>
         <a href="#interets" class="hover:text-teal-500">Centres d'intérêt</a>
+        <a href="#" target="_blank" class="hover:text-teal-500">Veille</a>
         <a href="#contact" class="mt-2 px-4 py-2.5 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-lg inline-block w-max shadow-lg">Contact</a>
       </div>
     </div>
   </header>
 
   <main class="max-w-6xl mx-auto px-6 py-12">
-    <section id="hero" class="grid md:grid-cols-3 gap-10 items-center mb-24">
-      <div class="md:col-span-2">
+    <section id="hero" class="mb-24 relative">
+      <!-- Photo en haut à droite fixée -->
+      <div class="absolute top-0 right-0 scroll-fade">
+        <div class="w-64 h-64 bg-gradient-to-br from-teal-400 via-cyan-400 to-sky-500 rounded-3xl overflow-hidden flex items-center justify-center shadow-2xl transform hover:scale-110 hover:rotate-6 transition-all duration-500 border-4 border-white/50">
+          <img src="images/profil.png" alt="Photo MLY" class="object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/400x400/0ea5a4/ffffff?text=MLY'" />
+        </div>
+        <div class="text-sm text-white font-bold bg-slate-900/70 px-6 py-3 rounded-full backdrop-blur-md border border-cyan-500/30 shadow-xl text-center mt-4">
+          🎓 BTS SIO SISR — 2ème année
+        </div>
+      </div>
+
+      <!-- Contenu principal -->
+      <div class="max-w-3xl">
         <h1 class="text-5xl md:text-6xl font-black leading-tight text-white mb-3">
           Bonjour, je suis
         </h1>
@@ -341,31 +628,34 @@
           </a>
         </div>
 
-        <div class="mt-10 grid grid-cols-2 gap-5 text-sm scroll-fade">
-          <div class="p-7 rounded-2xl glass shadow-2xl card-hover">
-            <div class="font-black text-xl text-teal-600 mb-2">🎯 Spécialité</div>
+        <!-- NOUVEAU BLOC ALTERNANCE -->
+        <div class="mt-8 scroll-fade">
+          <div class="p-6 rounded-2xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500 shadow-2xl card-hover border-4 border-white">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-3xl">🎯</span>
+              <div class="font-black text-xl text-white">Recherche Alternance</div>
+            </div>
+            <div class="text-white text-base font-bold">📅 Septembre 2026</div>
+            <div class="text-white text-xs mt-1">Administration systèmes & réseaux • Infrastructure • Cybersécurité</div>
+          </div>
+        </div>
+  
+        <!-- Spécialité et Alternance -->
+        <div class="mt-6 grid grid-cols-2 gap-4 scroll-fade">
+          <div class="p-5 rounded-2xl glass shadow-2xl card-hover">
+            <div class="font-black text-lg text-teal-600 mb-1">🎯 Spécialité</div>
             <div class="text-gray-700 text-sm"><strong>SISR</strong> — Systèmes & Réseaux</div>
           </div>
-          <div class="p-7 rounded-2xl glass shadow-2xl card-hover">
-            <div class="font-black text-xl text-teal-600 mb-2">🚀 Objectif</div>
-            <div class="text-gray-700 text-xs mt-1"><strong>Stage</strong> / Jan-Fév 2026</div>
-            <div class="text-gray-700 text-xs mt-1"><strong>Alternance</strong> / Sept 2026</div>
+          <div class="p-5 rounded-2xl glass shadow-2xl card-hover">
+            <div class="font-black text-lg text-teal-600 mb-1">🚀 Alternance</div>
+            <div class="text-gray-700 text-sm">Recherche pour Sept. 2026</div>
           </div>
         </div>
       </div>
-
-      <aside class="flex flex-col items-center gap-5 text-center scroll-fade">
-        <div class="w-72 h-72 bg-gradient-to-br from-teal-400 via-cyan-400 to-sky-500 rounded-3xl overflow-hidden flex items-center justify-center shadow-2xl transform hover:scale-110 hover:rotate-6 transition-all duration-500 border-4 border-white/50">
-          <img src="images/profile.jpg" alt="Photo MLY" class="object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/400x400/0ea5a4/ffffff?text=MLY'" />
-        </div>
-        <div class="text-sm text-white font-bold bg-slate-900/70 px-8 py-4 rounded-full backdrop-blur-md border border-cyan-500/30 shadow-xl">
-          🎓 BTS SIO SISR — 2ème année
-        </div>
-      </aside>
     </section>
-
+    
     <section id="a-propos" class="mb-24 scroll-fade">
-      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">📋 À propos</h2>
+      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">📋 MOI</h2>
       <div class="glass p-10 rounded-3xl shadow-2xl card-hover">
         <p class="text-gray-800 leading-relaxed text-lg mb-4">
           Étudiant en BTS SIO SISR 2ème année et auto-entrepreneur. Débrouillard et autonome, j'ai créé mon auto-entreprise en arrivant en France (2023) pour collaborer avec des sociétés d'intérim en Île-de-France.
@@ -399,54 +689,105 @@
               <span class="text-2xl">💼</span>
               <strong class="text-sm">LinkedIn</strong>
             </a>
-            
-            <a href="tutoriels.html" class="flex items-center gap-3 p-4 bg-purple-50 rounded-xl hover:bg-purple-100 transition-all social-link">
-              <span class="text-2xl">📚</span>
-              <strong class="text-sm">Mes Tutoriels</strong>
-            </a>
           </div>
         </div>
       </div>
     </section>
 
-   <section id="projet-pro" class="mb-24 scroll-fade">
+    <section id="projet-pro" class="mb-24 scroll-fade">
       <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">🎯 Projet professionnel</h2>
       <div class="glass p-10 rounded-3xl shadow-2xl card-hover">
         <p class="text-gray-800 leading-relaxed text-lg">
-        🎯 Mon objectif professionnel est de devenir <strong>administrateur système et réseau</strong> , en maîtrisant la conception, le déploiement et la <strong>sécurisation d’infrastructures</strong> complexes, sous <strong>Windows et Linux.</strong>
-            À long terme, j’ambitionne d’évoluer vers des postes à responsabilité technique (Responsable IT, Directeur des systèmes d’information) tout en développant mes propres <strong>projets entrepreneuriaux</strong> dans des domaines variés. <br><br>
-            Cette double vision — technicien et entrepreneur — reflète ma personnalité : curieux, autonome et toujours en quête de nouveaux défis.</p>
+          🎯 Mon objectif professionnel est de devenir <strong>administrateur système et réseau</strong>, en maîtrisant la conception, le déploiement et la <strong>sécurisation d'infrastructures</strong> complexes, sous <strong>Windows et Linux.</strong>
+          À long terme, j'ambitionne d'évoluer vers des postes à responsabilité technique (Responsable IT, Directeur des systèmes d'information) tout en développant mes propres <strong>projets entrepreneuriaux</strong> dans des domaines variés. <br><br>
+          Cette double vision — technicien et entrepreneur — reflète ma personnalité : curieux, autonome et toujours en quête de nouveaux défis.
+        </p>
       </div>
     </section>
 
     <section id="parcours" class="mb-24 scroll-fade">
-      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">💼 Parcours</h2>
+      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">💼 Parcours & Formation</h2>
       <div class="timeline-visual">
         <div class="timeline-line"></div>
         <div id="timeline-container"></div>
       </div>
     </section>
 
-    <section id="formation" class="mb-24 scroll-fade">
-      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">🎓 Formation</h2>
-      <div id="formation-list" class="space-y-5"></div>
-    </section>
-
+    <!-- ========== SECTION COMPÉTENCES ========== -->
     <section id="competences" class="mb-24 scroll-fade">
-      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">⚡ Compétences</h2>
-      <div id="skills" class="flex flex-wrap gap-3"></div>
+      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">⚡ Compétences Techniques</h2>
+      
+      <div class="space-y-10">
+        
+        <!-- 1. Systèmes & Virtualisation -->
+        <div class="glass p-8 rounded-3xl shadow-2xl card-hover skill-category">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">🖥️</span>
+            <h3 class="text-2xl font-black text-teal-600">Systèmes & Virtualisation</h3>
+          </div>
+          <div id="skills-systemes" class="space-y-4"></div>
+        </div>
+
+        <!-- 2. Réseau & Sécurité -->
+        <div class="glass p-8 rounded-3xl shadow-2xl card-hover skill-category">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">🔒</span>
+            <h3 class="text-2xl font-black text-teal-600">Réseau & Sécurité</h3>
+          </div>
+          <div id="skills-reseau" class="space-y-4"></div>
+        </div>
+
+        <!-- 3. Développement & Web (SLAM) -->
+        <div class="glass p-8 rounded-3xl shadow-2xl card-hover skill-category">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">💻</span>
+            <h3 class="text-2xl font-black text-teal-600">Développement & Web (SLAM)</h3>
+          </div>
+          <div id="skills-dev" class="space-y-4"></div>
+        </div>
+
+        <!-- 4. Outils & Supervision -->
+        <div class="glass p-8 rounded-3xl shadow-2xl card-hover skill-category">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">🛠️</span>
+            <h3 class="text-2xl font-black text-teal-600">Outils & Supervision</h3>
+          </div>
+          <div id="skills-outils" class="space-y-4"></div>
+        </div>
+
+      </div>
     </section>
 
+    <!-- ========== SECTION PROJETS EN CARROUSEL (RÉPARÉ) ========== -->
     <section id="projets" class="mb-24 scroll-fade">
-      <h2 class="text-5xl font-black mb-12 text-white drop-shadow-2xl">🚀 Projets réalisés (ou en cours...)</h2>
-      <div id="projects-container" class="space-y-6"></div>
+      <h2 class="text-5xl font-black mb-12 text-white drop-shadow-2xl">🚀 Projets réalisés</h2>
+      
+      <div class="projects-carousel-container">
+        <button class="carousel-arrow prev" id="carousel-prev">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        
+        <div class="projects-carousel" id="projects-carousel">
+          <!-- Les projets seront injectés ici par JS -->
+        </div>
+        
+        <button class="carousel-arrow next" id="carousel-next">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="carousel-dots" id="carousel-dots"></div>
     </section>
 
     <section id="downloads" class="mb-24 scroll-fade">
       <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">📄 CV</h2>
       <div class="glass p-10 rounded-3xl shadow-2xl card-hover">
         <div class="flex flex-wrap gap-5">
-          <a href="docs/CV-MLY.pdf" download class="px-8 py-4 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-xl btn-glow transform hover:scale-110 transition-all shadow-2xl font-bold text-lg flex items-center gap-3">
+          <a href="docs/CV-MLY.pdf" download="CV-Mamadou-Alpha-LY.pdf" class="px-8 py-4 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-xl btn-glow transform hover:scale-110 transition-all shadow-2xl font-bold text-lg flex items-center gap-3">
             <span class="text-2xl">📥</span> Télécharger
           </a>
           <a href="docs/CV-MLY.pdf" target="_blank" class="px-8 py-4 border-3 border-teal-500 text-teal-600 rounded-xl hover:bg-teal-50 transition-all transform hover:scale-110 font-bold text-lg flex items-center gap-3 shadow-xl glass">
@@ -455,6 +796,7 @@
         </div>
       </div>
     </section>
+    
 
     <section id="interets" class="mb-24 scroll-fade">
       <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">🎯 Centres d'intérêt</h2>
@@ -482,29 +824,42 @@
           </div>
         </div>
       </div>
-    </section>
 
-    <section id="veille" class="mb-24 scroll-fade">
-      <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">🔍 Veille Technologique</h2>
-      
-      <div class="glass p-8 rounded-3xl shadow-2xl mb-8">
-        <h3 class="font-black text-2xl text-teal-600 mb-4">📡 Mes sujets de veille</h3>
-        <div class="grid md:grid-cols-2 gap-6">
-          <div class="p-6 bg-teal-50 rounded-2xl">
-            <h4 class="font-bold text-lg mb-2">🔒 Cybersécurité Réseau</h4>
-            <p class="text-sm text-gray-600">IDS/IPS, pare-feu, VPN, Zero Trust, audit de sécurité</p>
+      <div class="glass p-10 rounded-3xl shadow-2xl card-hover mb-8 mt-8">
+        <h3 class="font-black text-3xl text-teal-600 mb-4">🎨 Créations 3D / Modélisation</h3>
+        <p class="text-gray-700 mb-6 leading-relaxed">
+          Je me suis mis un peu à la 3D récemment, juste par curiosité et par plaisir. Voici quelques petites créations que j'ai faites sur <strong>Blender</strong>.
+        </p>
+  
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 h-96">
+          <div id="carousel-3d" class="flex transition-transform duration-700 ease-in-out h-full">
+            <div class="min-w-full h-full flex items-center justify-center p-8">
+              <img src="docs/Photo pyramide-2.png" alt="Création 3D 1" class="max-h-full max-w-full object-contain rounded-lg shadow-2xl" />
+            </div>
+            <div class="min-w-full h-full flex items-center justify-center p-8">
+              <img src="docs/Forêt-exo2.png" alt="Création 3D 2" class="max-h-full max-w-full object-contain rounded-lg shadow-2xl" />
+            </div>
+            <div class="min-w-full h-full flex items-center justify-center p-8">
+              <img src="docs/Katana-exo3.png" alt="Création 3D 3" class="max-h-full max-w-full object-contain rounded-lg shadow-2xl" />
+            </div>
           </div>
-          <div class="p-6 bg-blue-50 rounded-2xl">
-            <h4 class="font-bold text-lg mb-2">☁️ Virtualisation & Cloud</h4>
-            <p class="text-sm text-gray-600">Proxmox, VMware, conteneurisation, automatisation</p>
+          
+          <button id="prev-3d" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-xl transition-all hover:scale-110">
+            <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <button id="next-3d" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-xl transition-all hover:scale-110">
+            <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+          
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+            <button class="carousel-dot-3d w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all" data-index="0"></button>
+            <button class="carousel-dot-3d w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all" data-index="1"></button>
+            <button class="carousel-dot-3d w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all" data-index="2"></button>
           </div>
-        </div>
-      </div>
-
-      <div class="glass p-8 rounded-3xl shadow-2xl">
-        <h3 class="font-black text-xl text-gray-800 mb-6">📰 Dernières actualités <span class="text-sm text-gray-500 font-normal">(Mise à jour automatique)</span></h3>
-        <div id="rss-feed" class="space-y-3">
-          <p class="text-gray-500 text-center py-8">Chargement des actualités...</p>
         </div>
       </div>
     </section>
@@ -512,26 +867,54 @@
     <section id="contact" class="mb-24 scroll-fade">
       <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">✉️ Contact</h2>
       <div class="grid md:grid-cols-2 gap-8">
-        <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST" class="space-y-5 glass p-10 rounded-3xl shadow-2xl">
+        <form id="contact-form" method="POST" class="space-y-5 glass p-10 rounded-3xl shadow-2xl">
+          <!-- Honeypot anti-spam (invisible) -->
+          <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+          
           <label class="block">
-            <span class="text-sm font-black text-gray-700 mb-2 block">Nom</span>
-            <input name="name" required class="block w-full rounded-xl border-2 border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-200 transition-all p-4 font-medium" placeholder="Votre nom" />
+            <span class="text-sm font-black text-gray-700 mb-2 block">Nom *</span>
+            <input 
+              type="text" 
+              name="name" 
+              required 
+              minlength="2"
+              class="block w-full rounded-xl border-2 border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-200 transition-all p-4 font-medium" 
+              placeholder="Votre nom" 
+            />
           </label>
+          
           <label class="block">
-            <span class="text-sm font-black text-gray-700 mb-2 block">Email</span>
-            <input type="email" name="email" required class="block w-full rounded-xl border-2 border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-200 transition-all p-4 font-medium" placeholder="votre@email.com" />
+            <span class="text-sm font-black text-gray-700 mb-2 block">Email *</span>
+            <input 
+              type="email" 
+              name="email" 
+              required 
+              class="block w-full rounded-xl border-2 border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-200 transition-all p-4 font-medium" 
+              placeholder="votre@email.com" 
+            />
           </label>
+          
           <label class="block">
-            <span class="text-sm font-black text-gray-700 mb-2 block">Message</span>
-            <textarea name="message" rows="6" required class="block w-full rounded-xl border-2 border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-200 transition-all p-4 font-medium" placeholder="Votre message..."></textarea>
+            <span class="text-sm font-black text-gray-700 mb-2 block">Message *</span>
+            <textarea 
+              name="message" 
+              rows="6" 
+              required 
+              minlength="10"
+              class="block w-full rounded-xl border-2 border-gray-200 focus:border-teal-500 focus:ring-4 focus:ring-teal-200 transition-all p-4 font-medium" 
+              placeholder="Votre message..."
+            ></textarea>
           </label>
+          
           <label class="flex items-start gap-3 text-sm text-gray-700">
             <input type="checkbox" name="rgpd" required class="mt-1 w-5 h-5" /> 
-            <span>J'accepte que mes données soient utilisées pour répondre à ce message (RGPD)</span>
+            <span>J'accepte que mes données soient utilisées pour répondre à ce message (RGPD) *</span>
           </label>
+          
           <button type="submit" class="w-full px-8 py-5 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-xl font-black btn-glow transform hover:scale-105 transition-all shadow-2xl text-xl">
             Envoyer 🚀
           </button>
+          
           <div id="form-status" class="text-sm text-center font-bold"></div>
         </form>
 
@@ -558,11 +941,6 @@
                 <span class="text-2xl">💼</span>
                 <strong class="text-sm">LinkedIn</strong>
               </a>
-              
-              <a href="tutoriels.html" class="flex items-center gap-3 p-4 bg-purple-50 rounded-xl hover:bg-purple-100 transition-all social-link">
-                <span class="text-2xl">📚</span>
-                <strong class="text-sm">Tutoriels</strong>
-              </a>
             </div>
           </div>
 
@@ -579,9 +957,23 @@
     <div class="mb-4 text-3xl">🚀</div>
     <p class="font-bold text-lg">© <span id="footer-year"></span> Mamadou Alpha LY</p>
     <p class="text-sm text-gray-400 mt-2">Portfolio — BTS SIO SISR</p>
+    <div class="mt-3">
+      <a href="mentions-legales.html" 
+         class="text-teal-400 hover:text-teal-300 transition-colors text-sm hover:underline"
+         style="position: relative; z-index: 999999; pointer-events: auto;">
+         📜 Mentions légales
+      </a>
+    </div>
   </footer>
 
+  <!-- Bouton Retour en haut -->
+  <button id="scroll-to-top" title="Retour en haut">↑</button>
+
   <script>
+    // ========== CONFIGURATION API ==========
+    const API_BASE_URL = 'https://portfolio-radar-2.preview.emergentagent.com/api';
+
+    // ========== CANVAS BACKGROUND ==========
     const canvas = document.getElementById('network-canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -604,8 +996,8 @@
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.8;
-        this.vy = (Math.random() - 0.5) * 0.8;
+        this.vx = (Math.random() - 0.5) * 1.2;
+        this.vy = (Math.random() - 0.5) * 1.2;
         this.radius = 3;
       }
       update() {
@@ -619,8 +1011,8 @@
           this.vy += (dy / distance) * force * 2;
         }
         
-        this.vx *= 0.95;
-        this.vy *= 0.95;
+        this.vx *= 0.92;
+        this.vy *= 0.92;
         
         this.x += this.vx;
         this.y += this.vy;
@@ -675,6 +1067,7 @@
       canvas.height = window.innerHeight;
     });
 
+    // ========== FLOATING ICONS ==========
     const iconsContainer = document.getElementById('floating-icons');
     const icons = ['🖥️', '🌐', '🔒', '⚡', '🛡️', '📡', '🔧', '💾', '🔌', '🌟'];
     for (let i = 0; i < 15; i++) {
@@ -688,10 +1081,12 @@
       iconsContainer.appendChild(icon);
     }
 
+    // ========== MENU MOBILE ==========
     document.getElementById('mobile-menu-btn').addEventListener('click', function(){
       document.getElementById('mobile-menu').classList.toggle('hidden');
     });
 
+    // ========== SCROLL FADE ANIMATION ==========
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if(e.isIntersecting) e.target.classList.add('visible');
@@ -699,87 +1094,222 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
 
+    // ========== READ MORE ==========
     document.getElementById('read-more-btn').addEventListener('click', function() {
       const more = document.getElementById('more-text');
       more.classList.toggle('hidden');
       this.textContent = more.classList.contains('hidden') ? 'Lire plus →' : 'Réduire ↑';
     });
 
+    // ========== FOOTER YEAR ==========
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 
+    // ========== FORMULAIRE DE CONTACT ==========
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+
+    contactForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '⏳ Envoi en cours...';
+      formStatus.textContent = '';
+      formStatus.className = 'text-sm text-center font-bold';
+      
+      try {
+        const formData = new FormData(this);
+        
+        try {
+          const response = await fetch(`${API_BASE_URL}/contact`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: formData.get('name'),
+              email: formData.get('email'),
+              message: formData.get('message')
+            })
+          });
+          
+          const data = await response.json();
+          
+          if (data.success) {
+            formStatus.textContent = data.message;
+            formStatus.classList.add('text-green-600');
+            contactForm.reset();
+          } else {
+            formStatus.textContent = data.message;
+            formStatus.classList.add('text-red-600');
+          }
+        } catch (apiError) {
+          const response = await fetch('send_mail.php', {
+            method: 'POST',
+            body: formData
+          });
+          const data = await response.json();
+          
+          if (data.success) {
+            formStatus.textContent = data.message;
+            formStatus.classList.add('text-green-600');
+            contactForm.reset();
+          } else {
+            formStatus.textContent = data.message;
+            formStatus.classList.add('text-red-600');
+          }
+        }
+        
+        setTimeout(() => { formStatus.textContent = ''; }, 5000);
+      } catch (error) {
+        formStatus.textContent = '❌ Erreur réseau. Vérifiez votre connexion.';
+        formStatus.classList.add('text-red-600');
+        console.error('Erreur:', error);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+    });
+
+    // ========== DATA (CORRIGÉE - CHRONOLOGIE FIXÉE) ==========
     const data = {
       "parcours": [
+        {"date":"Jan. 2026 - Fév. 2026","icon":"💼","titre":"Technicien Systèmes & Réseaux (Stage)","lieu":"Lycée Sévigné, Granville","desc":"Mise en place infrastructure sécurisée, filtrage web avancé et cloud hybride."},
         {"date":"2025-2026","icon":"🎓","titre":"BTS SIO SISR 2ème année","desc":"Cybersécurité, infrastructures avancées, projets pro"},
+        {"date":"Juin 2024 (5 semaines)","icon":"🔧","titre":"Stage Technicien Support & Déploiement","lieu":"Informatique de la Baie, Avranches","desc":"Maintenance matérielle, nettoyage virale, montage serveurs/PC, déploiement d'images OS sur 20 postes via FOG Project."},
         {"date":"2024-2025","icon":"🍔","titre":"BTS SIO SISR 1ère année + Burger King","desc":"Système/réseau, virtualisation, AD + job étudiant restauration"},
         {"date":"2024","icon":"🏝️","titre":"Mission Corse","desc":"Autonomie complète, développement persévérance"},
         {"date":"Depuis 2023","icon":"💼","titre":"Auto-entrepreneur","desc":"Collaboration sociétés intérim Île-de-France"}
-        
       ],
       "formation": [
-        {"date":"2024-2025","titre":"BTS SIO SISR (2ème année)","desc":"Lycée Notre Dame de la Providence, Avranches, France"},
-        {"date":"2023-2024","titre":"BTS SIO SISR (1ère année)","desc":"Lycée Notre Dame de la Providence, Avranches, France"},
         {"date":"2021-2022","titre":"Baccalauréat","desc":"Lycée Lamine Gueye, Dakar, Sénégal"}
-      ],
-      "competences": [
-        "Proxmox VE","Windows Server 2025","Active Directory","pfSense/OPNsense","Cisco (3750/2960)","VLAN/Routage","VPN","Proxy (SQUID)","GLPI","Nextcloud","Docker","Linux Debian","PowerShell/Bash","LDAP","Audit (PingCastle/Lynis)","DMZ","FOG Project"
       ],
       "projets": [
         {
-          "titre":"LAB'SIO — Infrastructure Réseau Sécurisée en binôme",
+          "titre":"Infrastructure Cloud Hybride & Supervision (Oracle Cloud)",
+          "badge":"CLOUD",
+          "badgeColor":"blue",
+          "icon":"☁️",
+          "resume":"Déploiement d'une infrastructure haute disponibilité sur Oracle Cloud Free Tier (2 serveurs VPS AMD).",
+          "techs":["Oracle Cloud","Docker","Portainer","WireGuard","AdGuard Home","Uptime Kuma","N8N"],
+          "points":[
+            "Serveur 1 (Sécurité) : VPN WireGuard pour accès admin + AdGuard Home (DNS Sinkhole).",
+            "Serveur 2 (Monitoring) : Supervision Uptime Kuma automatisée.",
+            "Automatisation : Script d'alerte via Webhook N8N envoyant des emails HTML/CSS personnalisés en cas de panne."
+          ],
+          "competences":"Cloud • Docker • VPN • Monitoring • Automatisation • N8N • Uptime Kuma",
+          "docLink":"#"
+        },
+        {
+          "titre":"Sécurisation Web & Filtrage SSO (Lycée Sévigné)",
+          "badge":"STAGE",
+          "badgeColor":"purple",
+          "icon":"🛡️",
+          "resume":"Mise en place d'un proxy filtrant transparent interconnecté à l'Active Directory avec authentification sans friction.",
+          "techs":["pfSense","Squid","SquidGuard","Active Directory","Kerberos","Windows Server"],
+          "points":[
+            "Filtrage Web avancé par catégories (SquidGuard).",
+            "Authentification transparente via Kerberos (SSO) : Aucune pop-up de connexion pour les utilisateurs du domaine.",
+            "Remontée des logs par nom d'utilisateur et non par IP uniquement.",
+            "Maquettage en environnement isolé avant mise en production."
+          ],
+          "competences":"Proxy • Filtrage Web • SSO • Active Directory • Sécurité",
+          "docLink":"#"
+        },
+        {
+          "titre":"Centralisation des Logs & R&D (Projet expérimental)",
+          "badge":"R&D / OBSTACLE TECHNIQUE",
+          "badgeColor":"red",
+          "icon":"🔬",
+          "resume":"Tentative de centralisation des journaux d'événements Windows Server 2025 avec automatisation PowerShell.",
+          "techs":["Windows Server 2025","PowerShell","Event Forwarding"],
+          "points":[
+            "Objectif : Détection virale via logs -> Script PowerShell -> Alerte centralisée.",
+            "Obstacle critique identifié : Le service de collecte d'événements de Windows Server 2025 plante systématiquement (Bug OS connu/documenté).",
+            "Veille technique : Analyse comparative avec IBM QRadar et documentation Microsoft. Projet mis en pause en attente de correctif Microsoft."
+          ],
+          "competences":"R&D • PowerShell • Event Management • Troubleshooting",
+          "docLink":"#"
+        },
+        {
+          "titre":"LAB'SIO — Infrastructure Réseau Sécurisée",
           "badge":"EN COURS",
           "badgeColor":"green",
           "icon":"🔒",
-          "resume":"Infrastructure professionnelle complète avec segmentation réseau, DMZ, VPN, IDS/IPS, supervision et audit de sécurité.",
-          "techs":["Proxmox","pfSense","Cisco 3750/2960","VLAN","Windows Server 2025","Active Directory","VPN","IDS/IPS","Zabbix","Reverse Proxy","Portail Captif","Stormshield"],
+          "resume":"Infrastructure complète avec segmentation réseau, DMZ, VPN et IDS/IPS.",
+          "techs":["Proxmox","pfSense","Cisco","VLAN","Snort/Suricata","Zabbix","RustDesk"],
           "points":[
             "2 serveurs Proxmox + switches Cisco + firewall Stormshield",
             "pfSense avec 4 zones (WAN/LAN/DMZ/BLUE) + VLANs multiples",
             "Serveur Web en DMZ avec reverse proxy multi-sites",
-            "WiFi pédagogique avec portail captif",
             "VPN OpenVPN/Wireguard pour administration distante",
             "IDS/IPS Suricata/Wazuh + filtrage Squid/pfBlocker",
-            "Audit PingCastle (AD) + Lynis (Linux)",
-            "Supervision Zabbix temps réel"
+            "Supervision Zabbix + Accès distant RustDesk",
+            "Audit PingCastle (AD) + Lynis (Linux)"
           ],
-          "competences":"Cybersécurité • Segmentation réseau • VPN • IDS/IPS • Supervision • Audit"
+          "competences":"Cybersécurité • Segmentation réseau • VPN • IDS/IPS • Supervision • Zabbix • RustDesk",
+          "docLink":"#"
         },
         {
           "titre":"APAEIA — Infrastructure Active Directory",
           "badge":"BTS SIO 1",
           "badgeColor":"blue",
           "icon":"🏥",
-          "resume":"Rénovation complète infrastructure association (5 établissements) : AD, GPO, helpdesk GLPI, cloud privé Nextcloud.",
-          "techs":["Proxmox","IpFire","Windows Server 2022","Active Directory","GPO","FSRM","GLPI","Nextcloud","LDAP","Debian"],
+          "resume":"Rénovation infrastructure : AD, GPO, GLPI et Nextcloud.",
+          "techs":["Windows Server 2022","Active Directory","GPO","GLPI","Debian","FOG Project"],
           "points":[
             "Audit infrastructure obsolète (Windows Server 2008 R2)",
             "AD complet avec domaine apaeia.fr, OU, groupes, utilisateurs",
             "Lecteurs réseau automatiques via GPO + quotas FSRM",
             "Serveur d'impression centralisé",
             "Helpdesk GLPI avec liaison LDAP",
+            "Déploiement d'images OS via FOG Project"
           ],
-          "competences":"Active Directory • GPO • Helpdesk • LDAP "
-        },
-        {
-          "titre":"Déploiement OS avec FOG Project",
-          "badge":"STAGE 1ère",
-          "badgeColor":"purple",
-          "icon":"💾",
-          "resume":"Automatisation déploiement Windows 11 en multicast sur 20 postes.",
-          "techs":["FOG Project","Windows 11","PXE Boot","Multicast","DHCP/TFTP"],
-          "points":[
-            "Installation serveur FOG sur Linux",
-            "Configuration PXE Boot (DHCP/TFTP)",
-            "Création image master Windows 11",
-            "Déploiement multicast simultané",
-            "Gain de temps considérable vs déploiement unitaire"
-          ],
-          "competences":"Déploiement automatisé • PXE • Multicast • Imaging"
+          "competences":"Active Directory • GPO • Helpdesk • LDAP • FOG Project",
+          "docLink":"#"
         }
-      ]
+      ],
+      "competences": {
+        "systemes": [
+          {"nom": "Windows Server 2025", "pourcentage": 85},
+          {"nom": "Active Directory", "pourcentage": 85},
+          {"nom": "Proxmox VE", "pourcentage": 80},
+          {"nom": "Linux Debian", "pourcentage": 80},
+          {"nom": "Docker", "pourcentage": 70}
+        ],
+        "reseau": [
+          {"nom": "pfSense / OPNsense", "pourcentage": 85},
+          {"nom": "VPN (OpenVPN/Wireguard)", "pourcentage": 80},
+          {"nom": "VLAN / Routage", "pourcentage": 80},
+          {"nom": "DMZ & Segmentation", "pourcentage": 75},
+          {"nom": "Cisco (3750/2960)", "pourcentage": 70},
+          {"nom": "Proxy (SQUID)", "pourcentage": 65},
+          {"nom": "AdGuard Home", "pourcentage": 75}
+        ],
+        "dev": [
+          {"nom": "PowerShell", "pourcentage": 80},
+          {"nom": "Bash / Shell", "pourcentage": 75},
+          {"nom": "HTML / CSS / JS", "pourcentage": 70},
+          {"nom": "N8N (Automatisation)", "pourcentage": 65}
+        ],
+        "outils": [
+          {"nom": "GLPI (Helpdesk)", "pourcentage": 85},
+          {"nom": "Zabbix", "pourcentage": 75},
+          {"nom": "Uptime Kuma", "pourcentage": 80},
+          {"nom": "RustDesk", "pourcentage": 70},
+          {"nom": "FOG Project", "pourcentage": 75},
+          {"nom": "LDAP", "pourcentage": 80},
+          {"nom": "Nextcloud", "pourcentage": 65},
+          {"nom": "Audit (PingCastle)", "pourcentage": 70},
+          {"nom": "Audit (Lynis)", "pourcentage": 70}
+        ]
+      }
     };
 
+    // ========== TIMELINE PARCOURS + FORMATION ==========
     const timelineContainer = document.getElementById('timeline-container');
-    data.parcours.forEach((item, index) => {
+    
+    data.parcours.forEach((item) => {
       const el = document.createElement('div');
       el.className = 'timeline-item-visual scroll-fade';
       el.innerHTML = `
@@ -787,6 +1317,7 @@
         <div class="timeline-content glass p-6 rounded-2xl shadow-xl card-hover">
           <div class="font-black text-sm text-teal-600 mb-2">${item.date}</div>
           <div class="font-bold text-lg text-gray-800">${item.titre}</div>
+          ${item.lieu ? `<div class="text-xs text-teal-500 mt-1">${item.lieu}</div>` : ''}
           <div class="text-sm text-gray-600 mt-2">${item.desc}</div>
         </div>
       `;
@@ -794,42 +1325,59 @@
       observer.observe(el);
     });
 
-    const fList = document.getElementById('formation-list');
     data.formation.forEach(f => {
       const el = document.createElement('div');
-      el.className = 'glass p-8 rounded-2xl shadow-2xl card-hover scroll-fade';
+      el.className = 'timeline-item-visual scroll-fade';
       el.innerHTML = `
-        <div class="flex flex-col md:flex-row gap-6 items-start">
-          <div class="text-sm font-black text-white bg-teal-500 px-5 py-2 rounded-lg">${f.date}</div>
-          <div class="flex-1">
-            <div class="font-black text-xl text-gray-800">${f.titre}</div>
-            <div class="text-sm text-gray-600 mt-2">${f.desc}</div>
-          </div>
+        <div class="timeline-dot-visual">🎓</div>
+        <div class="timeline-content glass p-6 rounded-2xl shadow-xl card-hover">
+          <div class="font-black text-sm text-teal-600 mb-2">${f.date}</div>
+          <div class="font-bold text-lg text-gray-800">${f.titre}</div>
+          <div class="text-sm text-gray-600 mt-2">${f.desc}</div>
         </div>
       `;
-      fList.appendChild(el);
+      timelineContainer.appendChild(el);
       observer.observe(el);
     });
 
-    const skills = document.getElementById('skills');
-    data.competences.forEach(s => {
-      const d = document.createElement('div');
-      d.className = 'tech-badge scroll-fade';
-      d.textContent = s;
-      skills.appendChild(d);
-      observer.observe(d);
-    });
+    // ========== RENDU COMPÉTENCES (DESIGN POURCENTAGE) ==========
+    function renderSkills(containerId, skills) {
+      const container = document.getElementById(containerId);
+      skills.forEach(skill => {
+        const skillItem = document.createElement('div');
+        skillItem.className = 'skill-item scroll-fade';
+        skillItem.innerHTML = `
+          <div class="skill-header">
+            <div class="skill-name">${skill.nom}</div>
+            <div class="skill-percentage">${skill.pourcentage}%</div>
+          </div>
+          <div class="skill-bar-container">
+            <div class="skill-bar-fill" style="--skill-width: ${skill.pourcentage}%"></div>
+          </div>
+        `;
+        container.appendChild(skillItem);
+        observer.observe(skillItem);
+      });
+    }
 
-    const projectsContainer = document.getElementById('projects-container');
-    data.projets.forEach(projet => {
-      const badgeColors = {
-        green: 'bg-green-100 text-green-600',
-        blue: 'bg-blue-100 text-blue-600',
-        purple: 'bg-purple-100 text-purple-600'
-      };
-      
+    renderSkills('skills-systemes', data.competences.systemes);
+    renderSkills('skills-reseau', data.competences.reseau);
+    renderSkills('skills-dev', data.competences.dev);
+    renderSkills('skills-outils', data.competences.outils);
+
+    // ========== CARROUSEL PROJETS (RÉPARÉ AVEC SCROLL-SNAP) ==========
+    const projectsCarousel = document.getElementById('projects-carousel');
+    const carouselDots = document.getElementById('carousel-dots');
+    const badgeColors = {
+      green: 'bg-green-100 text-green-600',
+      blue: 'bg-blue-100 text-blue-600',
+      purple: 'bg-purple-100 text-purple-600',
+      red: 'bg-red-100 text-red-600'
+    };
+
+    data.projets.forEach((projet, index) => {
       const card = document.createElement('div');
-      card.className = 'project-card glass p-8 rounded-3xl shadow-2xl scroll-fade';
+      card.className = 'carousel-project-card project-card glass p-8 rounded-3xl shadow-2xl scroll-fade';
       card.innerHTML = `
         <div class="flex items-start justify-between mb-4">
           <div class="flex items-center gap-4 flex-1">
@@ -847,6 +1395,10 @@
         <div class="mb-4">
           ${projet.techs.map(t => `<span class="tech-badge">${t}</span>`).join('')}
         </div>
+        
+        <a href="${projet.docLink}" class="doc-button">
+          📂 Voir la documentation
+        </a>
         
         <div class="project-details">
           <hr class="my-6 border-gray-300">
@@ -866,138 +1418,132 @@
         card.classList.toggle('expanded');
       });
       
-      projectsContainer.appendChild(card);
+      projectsCarousel.appendChild(card);
       observer.observe(card);
+
+      // Créer le dot correspondant
+      const dot = document.createElement('div');
+      dot.className = 'carousel-dot';
+      if (index === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => scrollToProjectByIndex(index));
+      carouselDots.appendChild(dot);
     });
 
-    async function loadRSSFeed() {
-      const feedContainer = document.getElementById('rss-feed');
-      const RSS_FEEDS = [
-        "https://www.it-connect.fr/feed/",
-        "https://www.zdnet.fr/feeds/rss/actualites/informatique/",
-        "https://www.cert.ssi.gouv.fr/feed/"
-      ];
-      
-      feedContainer.innerHTML = '<p class="text-gray-500 text-center py-4">⏳ Chargement des actualités...</p>';
-      
-      try {
-        const allArticles = [];
-        
-        for (const feed of RSS_FEEDS) {
-          try {
-            const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
-            const data = await response.json();
-            
-            if (data.status === 'ok' && data.items) {
-              const articles = data.items.slice(0, 2);
-              articles.forEach(article => {
-                allArticles.push({
-                  title: article.title,
-                  description: article.description || article.content || '',
-                  link: article.link,
-                  pubDate: article.pubDate,
-                  feedTitle: data.feed.title
-                });
-              });
-            }
-          } catch (err) {
-            console.error('Erreur flux:', feed, err);
+    // ========== NAVIGATION CARROUSEL (SCROLL-SNAP NATIF) ==========
+    let currentProjectIndex = 0;
+
+    function scrollToProjectByIndex(index) {
+      const cards = projectsCarousel.querySelectorAll('.carousel-project-card');
+      if (cards[index]) {
+        cards[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        currentProjectIndex = index;
+        updateCarouselDots();
+      }
+    }
+
+    function updateCarouselDots() {
+      const dots = carouselDots.querySelectorAll('.carousel-dot');
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentProjectIndex);
+      });
+    }
+
+    document.getElementById('carousel-prev').addEventListener('click', () => {
+      const newIndex = currentProjectIndex > 0 ? currentProjectIndex - 1 : data.projets.length - 1;
+      scrollToProjectByIndex(newIndex);
+    });
+
+    document.getElementById('carousel-next').addEventListener('click', () => {
+      const newIndex = currentProjectIndex < data.projets.length - 1 ? currentProjectIndex + 1 : 0;
+      scrollToProjectByIndex(newIndex);
+    });
+
+    // Observer pour détecter le projet visible au scroll
+    const carouselObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const cards = Array.from(projectsCarousel.querySelectorAll('.carousel-project-card'));
+          const index = cards.indexOf(entry.target);
+          if (index !== -1 && index !== currentProjectIndex) {
+            currentProjectIndex = index;
+            updateCarouselDots();
           }
         }
-        
-        if (allArticles.length > 0) {
-          feedContainer.innerHTML = allArticles.map(article => {
-            const date = new Date(article.pubDate);
-            const timeAgo = getTimeAgo(date);
-            const shortDesc = article.description.replace(/<[^>]*>/g, '').split(' ').slice(0, 25).join(' ') + '...';
-            
-            return `
-              <a href="${article.link}" target="_blank" class="rss-item block p-4 rounded-xl hover:bg-teal-50 transition-all border border-gray-200">
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">📰</span>
-                  <div class="flex-1">
-                    <div class="font-bold text-gray-800 text-sm mb-1">${article.title}</div>
-                    <p class="text-xs text-gray-600 mb-2">${shortDesc}</p>
-                    <div class="text-xs text-gray-500">${article.feedTitle} • ${timeAgo}</div>
-                  </div>
-                  <span class="text-teal-500">→</span>
-                </div>
-              </a>
-            `;
-          }).join('');
-        } else {
-          feedContainer.innerHTML = `
-            <a href="https://www.it-connect.fr/" target="_blank" class="rss-item block p-4 rounded-xl hover:bg-teal-50 transition-all border border-gray-200">
-              <div class="flex items-start gap-3">
-                <span class="text-2xl">💻</span>
-                <div class="flex-1">
-                  <div class="font-bold text-gray-800 text-sm mb-1">IT-Connect — Actualités IT & Réseau</div>
-                  <div class="text-xs text-gray-500">Tutoriels et actualités infrastructure</div>
-                </div>
-                <span class="text-teal-500">→</span>
-              </div>
-            </a>
-            <a href="https://www.zdnet.fr/actualites/informatique/" target="_blank" class="rss-item block p-4 rounded-xl hover:bg-teal-50 transition-all border border-gray-200">
-              <div class="flex items-start gap-3">
-                <span class="text-2xl">📰</span>
-                <div class="flex-1">
-                  <div class="font-bold text-gray-800 text-sm mb-1">ZDNet — Actualités Informatique</div>
-                  <div class="text-xs text-gray-500">News tech et cybersécurité</div>
-                </div>
-                <span class="text-teal-500">→</span>
-              </div>
-            </a>
-            <a href="https://www.cert.ssi.gouv.fr/" target="_blank" class="rss-item block p-4 rounded-xl hover:bg-teal-50 transition-all border border-gray-200">
-              <div class="flex items-start gap-3">
-                <span class="text-2xl">🔒</span>
-                <div class="flex-1">
-                  <div class="font-bold text-gray-800 text-sm mb-1">CERT-FR — Cybersécurité</div>
-                  <div class="text-xs text-gray-500">Alertes et bulletins de sécurité</div>
-                </div>
-                <span class="text-teal-500">→</span>
-              </div>
-            </a>
-          `;
-        }
-      } catch (error) {
-        console.error('Erreur RSS:', error);
-        feedContainer.innerHTML = '<p class="text-gray-500 text-center py-4">Erreur de chargement. <a href="https://www.it-connect.fr/" target="_blank" class="text-teal-600 underline">Voir IT-Connect</a></p>';
-      }
+      });
+    }, { threshold: 0.6, root: projectsCarousel });
+
+    projectsCarousel.querySelectorAll('.carousel-project-card').forEach(card => {
+      carouselObserver.observe(card);
+    });
+
+    // ========== CARROUSEL 3D ==========
+    let currentSlide3D = 0;
+    const carousel3D = document.getElementById('carousel-3d');
+    const totalSlides3D = 3;
+    let autoSlide3D;
+
+    function showSlide3D(index) {
+      currentSlide3D = (index + totalSlides3D) % totalSlides3D;
+      carousel3D.style.transform = `translateX(-${currentSlide3D * 100}%)`;
+      
+      document.querySelectorAll('.carousel-dot-3d').forEach((dot, i) => {
+        dot.style.backgroundColor = i === currentSlide3D ? 'white' : 'rgba(255,255,255,0.5)';
+      });
     }
 
-    function getTimeAgo(date) {
-      const seconds = Math.floor((new Date() - date) / 1000);
-      const intervals = {
-        'an': 31536000,
-        'mois': 2592000,
-        'jour': 86400,
-        'heure': 3600,
-        'minute': 60
-      };
-      
-      for (const [name, value] of Object.entries(intervals)) {
-        const interval = Math.floor(seconds / value);
-        if (interval >= 1) {
-          return `Il y a ${interval} ${name}${interval > 1 && name !== 'mois' ? 's' : ''}`;
-        }
-      }
-      return 'À l\'instant';
+    function nextSlide3D() {
+      showSlide3D(currentSlide3D + 1);
     }
 
-    loadRSSFeed();
+    function prevSlide3D() {
+      showSlide3D(currentSlide3D - 1);
+    }
 
-    document.getElementById('contact-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const status = document.getElementById('form-status');
-      status.textContent = '📤 Envoi...';
-      status.style.color = '#0ea5a4';
-      
-      setTimeout(() => {
-        status.textContent = '✅ Message envoyé !';
-        status.style.color = '#10b981';
-        this.reset();
-        setTimeout(() => status.textContent = '', 5000);
-      }, 1500);
+    function startAutoSlide3D() {
+      autoSlide3D = setInterval(nextSlide3D, 4500);
+    }
+
+    function resetAutoSlide3D() {
+      clearInterval(autoSlide3D);
+      startAutoSlide3D();
+    }
+
+    document.getElementById('next-3d').addEventListener('click', () => {
+      nextSlide3D();
+      resetAutoSlide3D();
+    });
+
+    document.getElementById('prev-3d').addEventListener('click', () => {
+      prevSlide3D();
+      resetAutoSlide3D();
+    });
+
+    document.querySelectorAll('.carousel-dot-3d').forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        showSlide3D(index);
+        resetAutoSlide3D();
+      });
+    });
+
+    startAutoSlide3D();
+    showSlide3D(0);
+
+    // ========== BOUTON RETOUR EN HAUT ==========
+    const scrollToTopBtn = document.getElementById('scroll-to-top');
+
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 100) {
+        scrollToTopBtn.classList.add('visible');
+      } else {
+        scrollToTopBtn.classList.remove('visible');
+      }
+    });
+
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
   </script>
 </body>

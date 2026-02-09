@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mentions légales — MLY Portfolio</title>
+  <meta name="description" content="Mentions légales du portfolio de Mamadou Alpha LY" />
+  
+  <!-- FAVICON -->
+  <link rel="icon" type="image/svg+xml" href="favicon_svg.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background-color: rgb(6, 44, 83);
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    .glass { 
+      background: rgba(255,255,255,0.08); 
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .card-hover {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 25px 50px rgba(14,165,165,0.35);
+    }
+  </style>
+</head>
+
+<body class="text-gray-200 antialiased">
+
+  <!-- 🔵 BARRE HAUT -->
+  <header class="sticky top-0 z-50 glass shadow-2xl">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      
+      <a href="index.html" class="flex items-center gap-3 transform hover:scale-110 transition-all duration-300">
+        <div class="w-14 h-14 flex items-center justify-center bg-gradient-to-br from-teal-400 via-cyan-400 to-sky-500 text-white font-black rounded-xl shadow-2xl hover:shadow-cyan-500/50 transition-all text-lg">
+          MLY
+        </div>
+        <div class="hidden sm:block">
+          <div class="text-sm font-bold">Mamadou Alpha LY</div>
+          <div class="text-xs text-gray-300">Étudiant BTS SIO/SISR</div>
+        </div>
+      </a>
+
+      <nav>
+        <a href="index.html" class="px-5 py-2.5 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-lg transform hover:scale-110 transition-all shadow-xl">
+          ← Retour au portfolio
+        </a>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- 📜 CONTENU -->
+  <main class="max-w-4xl mx-auto px-6 py-16 relative z-10">
+
+    <section class="mb-12">
+      <h1 class="text-5xl md:text-6xl font-black text-white mb-8 drop-shadow-2xl">
+        📜 Mentions légales
+      </h1>
+
+      <!-- 🔰 CARTE GLASS -->
+      <div class="glass p-10 rounded-3xl shadow-2xl card-hover mb-8">
+
+        <h2 class="text-3xl font-bold text-teal-300 mb-4">Éditeur du site</h2>
+        <p class="mb-4">
+          Ce site est édité par :<br>
+          <strong class="text-white">Mamadou Alpha LY</strong><br>
+          Adresse postale : Adresse personnelle communiquée sur demande<br>
+          Adresse e-mail : 
+          <a href="mailto:mamadoualphaly0552@gmail.com" class="text-teal-300 underline">
+            mamadoualphaly0552@gmail.com
+          </a>
+        </p>
+
+        <p class="mb-6">
+          Ce site a pour vocation de présenter mon parcours et mes compétences professionnelles 
+          dans le cadre de ma formation en BTS Services Informatiques aux Organisations (BTS SIO).
+        </p>
+
+        <h2 class="text-3xl font-bold text-teal-300 mb-4">Hébergement</h2>
+        <p class="mb-6">
+          Hébergeur : LWS (a-a-hebergement)<br>
+          Adresse : 10 rue Penthièvre, 75008 Paris<br>
+          Site web : 
+          <a href="https://www.a-a-hebergement.com/" target="_blank" class="text-teal-300 underline">
+            a-a-hebergement.com
+          </a>
+        </p>
+
+        <h2 class="text-3xl font-bold text-teal-300 mb-4">Données personnelles</h2>
+        <p class="mb-4">
+          Les données collectées via le formulaire de contact (nom, adresse e-mail, message) 
+          sont strictement confidentielles et utilisées uniquement pour répondre aux messages envoyés via le site.
+        </p>
+
+        <p class="mb-4">Conformément au RGPD, vous disposez des droits suivants :</p>
+        
+        <ul class="list-disc ml-6 mb-6 text-gray-300">
+          <li>Droit d'accès</li>
+          <li>Droit de rectification</li>
+          <li>Droit à l’effacement</li>
+          <li>Droit à la limitation du traitement</li>
+        </ul>
+
+        <p class="mb-6">
+          Pour exercer vos droits, contactez :  
+          <a href="mailto:mamadoualphaly0552@gmail.com" class="text-teal-300 underline">
+            mamadoualphaly0552@gmail.com
+          </a>
+        </p>
+
+        <p class="mb-6">
+          Les données sont conservées pendant une durée maximale de 12 mois et ne sont transmises à aucun tiers.
+        </p>
+
+        <h2 class="text-3xl font-bold text-teal-300 mb-4">Cookies</h2>
+        <p>
+          Ce site n’utilise aucun cookie à des fins de suivi, de publicité ou de mesure d’audience.
+        </p>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 🔻 FOOTER -->
+  <footer class="text-center text-gray-300 py-8">
+    © <script>document.write(new Date().getFullYear());</script> — Mamadou Alpha LY
+  </footer>
+
+</body>
+</html>
