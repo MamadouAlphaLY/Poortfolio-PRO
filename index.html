@@ -1278,7 +1278,7 @@
           {"nom": "Docker", "pourcentage": 70}
         ],
         "reseau": [
-          {"nom": "pfSense / OPNsense", "pourcentage": 85},
+          {"nom": "pfSense / Ipfire", "pourcentage": 85},
           {"nom": "VPN (OpenVPN/Wireguard)", "pourcentage": 80},
           {"nom": "VLAN / Routage", "pourcentage": 80},
           {"nom": "DMZ & Segmentation", "pourcentage": 75},
@@ -1287,14 +1287,14 @@
           {"nom": "AdGuard Home", "pourcentage": 75}
         ],
         "dev": [
-          {"nom": "PowerShell", "pourcentage": 80},
-          {"nom": "Bash / Shell", "pourcentage": 75},
-          {"nom": "HTML / CSS / JS", "pourcentage": 70},
+          {"nom": "PowerShell", "pourcentage": 50},
+          {"nom": "Bash / Shell", "pourcentage": 50},
+          {"nom": "HTML / CSS / JS", "pourcentage": 60},
           {"nom": "N8N (Automatisation)", "pourcentage": 65}
         ],
         "outils": [
           {"nom": "GLPI (Helpdesk)", "pourcentage": 85},
-          {"nom": "Zabbix", "pourcentage": 75},
+          {"nom": "Zabbix", "pourcentage": 50},
           {"nom": "Uptime Kuma", "pourcentage": 80},
           {"nom": "RustDesk", "pourcentage": 70},
           {"nom": "FOG Project", "pourcentage": 75},
@@ -1396,9 +1396,6 @@
           ${projet.techs.map(t => `<span class="tech-badge">${t}</span>`).join('')}
         </div>
         
-        <a href="${projet.docLink}" class="doc-button">
-          📂 Voir la documentation
-        </a>
         
         <div class="project-details">
           <hr class="my-6 border-gray-300">
