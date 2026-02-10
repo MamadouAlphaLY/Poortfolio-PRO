@@ -259,15 +259,6 @@
       50% { box-shadow: 0 0 0 15px rgba(14, 165, 164, 0.4); }
     }
     
-    .rss-item {
-      transition: all 0.3s ease;
-    }
-    
-    .rss-item:hover {
-      transform: translateX(10px);
-      background: rgba(14, 165, 164, 0.1);
-    }
-    
     .social-link {
       transition: all 0.3s ease;
     }
@@ -276,7 +267,6 @@
       transform: translateY(-5px) scale(1.1);
     }
 
-    /* Bouton Retour en haut */
     #scroll-to-top {
       position: fixed;
       bottom: 30px;
@@ -323,77 +313,117 @@
       }
     }
 
-    /* ========== STYLES COMPÉTENCES (DESIGN POURCENTAGE) ========== */
-    .skill-category {
-      margin-bottom: 40px;
+    /* ========== STYLES COMPÉTENCES (DESIGN EN GRILLE) ========== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 30px;
     }
 
-    .skill-item {
-      position: relative;
-      margin-bottom: 20px;
-      padding: 16px;
+    @media (min-width: 768px) {
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .skills-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .skill-domain-card {
       background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
-      border-radius: 12px;
+      border-radius: 20px;
+      padding: 30px;
       border: 2px solid #e2e8f0;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 15px rgba(14, 165, 164, 0.1);
     }
 
-    .skill-item:hover {
-      transform: translateX(8px);
+    .skill-domain-card:hover {
+      transform: translateY(-10px);
       border-color: #0ea5a4;
-      box-shadow: 0 8px 25px rgba(14, 165, 164, 0.25);
+      box-shadow: 0 15px 40px rgba(14, 165, 164, 0.3);
       background: linear-gradient(135deg, #ffffff 0%, #cffafe 100%);
     }
 
-    .skill-header {
+    .skill-domain-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 3px solid #0ea5a4;
     }
 
-    .skill-name {
-      font-weight: 700;
-      font-size: 1rem;
+    .skill-domain-icon {
+      font-size: 2.5rem;
+    }
+
+    .skill-domain-title {
+      font-size: 1.25rem;
+      font-weight: 800;
       color: #1e293b;
     }
 
-    .skill-percentage {
-      font-weight: 800;
-      font-size: 1.1rem;
+    .skill-item-compact {
+      margin-bottom: 16px;
+    }
+
+    .skill-item-compact:last-child {
+      margin-bottom: 0;
+    }
+
+    .skill-name-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .skill-name-compact {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #334155;
+    }
+
+    .skill-percentage-compact {
+      font-weight: 700;
+      font-size: 0.85rem;
       color: #0ea5a4;
-      min-width: 60px;
+      min-width: 45px;
       text-align: right;
     }
 
-    .skill-bar-container {
+    .skill-bar-container-compact {
       width: 100%;
-      height: 10px;
+      height: 6px;
       background: #e2e8f0;
-      border-radius: 20px;
+      border-radius: 10px;
       overflow: hidden;
       position: relative;
     }
 
-    .skill-bar-fill {
+    .skill-bar-fill-compact {
       height: 100%;
       background: linear-gradient(90deg, #0ea5a4, #06b6d4);
-      border-radius: 20px;
+      border-radius: 10px;
       transition: width 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       width: 0;
-      box-shadow: 0 0 15px rgba(14, 165, 164, 0.6);
+      box-shadow: 0 0 10px rgba(14, 165, 164, 0.5);
       position: relative;
       overflow: hidden;
     }
 
-    .skill-bar-fill::after {
+    .skill-bar-fill-compact::after {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
       animation: shimmer 2s infinite;
     }
 
@@ -402,11 +432,11 @@
       100% { transform: translateX(100%); }
     }
 
-    .skill-item.visible .skill-bar-fill {
+    .skill-item-compact.visible .skill-bar-fill-compact {
       width: var(--skill-width);
     }
 
-    /* ========== CARROUSEL PROJETS (RÉPARÉ AVEC SCROLL-SNAP) ========== */
+    /* ========== CARROUSEL PROJETS ========== */
     .projects-carousel-container {
       position: relative;
       overflow: visible;
@@ -526,28 +556,6 @@
     .carousel-dot:hover {
       background: rgba(255,255,255,0.5);
     }
-
-    .doc-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      background: linear-gradient(135deg, #f59e0b, #f97316);
-      color: white;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-      margin-top: 12px;
-    }
-
-    .doc-button:hover {
-      transform: scale(1.08);
-      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
-      background: linear-gradient(135deg, #f97316, #f59e0b);
-    }
   </style>
 </head>
 <body class="text-gray-800 antialiased">
@@ -571,7 +579,7 @@
         <a href="#competences" class="hover:text-teal-500 transition-colors">Compétences</a>
         <a href="#projets" class="hover:text-teal-500 transition-colors">Réalisations</a>
         <a href="#interets" class="hover:text-teal-500 transition-colors">Centres d'intérêt</a>
-        <a href="#" target="_blank" class="hover:text-teal-500 transition-colors">Veille</a>
+        <a href="https://veille.alphaly-it.fr/i/?a=global" target="_blank" class="hover:text-teal-500 transition-colors">Veille</a>
         <a href="#contact" class="px-5 py-2.5 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-lg btn-glow transform hover:scale-110 transition-all shadow-xl">Contact</a>
       </nav>
 
@@ -588,7 +596,7 @@
         <a href="#competences" class="hover:text-teal-500">Compétences</a>
         <a href="#projets" class="hover:text-teal-500">Réalisations</a>
         <a href="#interets" class="hover:text-teal-500">Centres d'intérêt</a>
-        <a href="#" target="_blank" class="hover:text-teal-500">Veille</a>
+        <a href="https://veille.alphaly-it.fr/i/?a=global" target="_blank" class="hover:text-teal-500">Veille</a>
         <a href="#contact" class="mt-2 px-4 py-2.5 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-lg inline-block w-max shadow-lg">Contact</a>
       </div>
     </div>
@@ -596,7 +604,6 @@
 
   <main class="max-w-6xl mx-auto px-6 py-12">
     <section id="hero" class="mb-24 relative">
-      <!-- Photo en haut à droite fixée -->
       <div class="absolute top-0 right-0 scroll-fade">
         <div class="w-64 h-64 bg-gradient-to-br from-teal-400 via-cyan-400 to-sky-500 rounded-3xl overflow-hidden flex items-center justify-center shadow-2xl transform hover:scale-110 hover:rotate-6 transition-all duration-500 border-4 border-white/50">
           <img src="images/profil.png" alt="Photo MLY" class="object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/400x400/0ea5a4/ffffff?text=MLY'" />
@@ -606,7 +613,6 @@
         </div>
       </div>
 
-      <!-- Contenu principal -->
       <div class="max-w-3xl">
         <h1 class="text-5xl md:text-6xl font-black leading-tight text-white mb-3">
           Bonjour, je suis
@@ -628,7 +634,6 @@
           </a>
         </div>
 
-        <!-- NOUVEAU BLOC ALTERNANCE -->
         <div class="mt-8 scroll-fade">
           <div class="p-6 rounded-2xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500 shadow-2xl card-hover border-4 border-white">
             <div class="flex items-center gap-3 mb-2">
@@ -640,7 +645,6 @@
           </div>
         </div>
   
-        <!-- Spécialité et Alternance -->
         <div class="mt-6 grid grid-cols-2 gap-4 scroll-fade">
           <div class="p-5 rounded-2xl glass shadow-2xl card-hover">
             <div class="font-black text-lg text-teal-600 mb-1">🎯 Spécialité</div>
@@ -713,52 +717,16 @@
       </div>
     </section>
 
-    <!-- ========== SECTION COMPÉTENCES ========== -->
+    <!-- ========== SECTION COMPÉTENCES (NOUVELLE VERSION EN GRILLE) ========== -->
     <section id="competences" class="mb-24 scroll-fade">
       <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">⚡ Compétences Techniques</h2>
       
-      <div class="space-y-10">
-        
-        <!-- 1. Systèmes & Virtualisation -->
-        <div class="glass p-8 rounded-3xl shadow-2xl card-hover skill-category">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="text-4xl">🖥️</span>
-            <h3 class="text-2xl font-black text-teal-600">Systèmes & Virtualisation</h3>
-          </div>
-          <div id="skills-systemes" class="space-y-4"></div>
-        </div>
-
-        <!-- 2. Réseau & Sécurité -->
-        <div class="glass p-8 rounded-3xl shadow-2xl card-hover skill-category">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="text-4xl">🔒</span>
-            <h3 class="text-2xl font-black text-teal-600">Réseau & Sécurité</h3>
-          </div>
-          <div id="skills-reseau" class="space-y-4"></div>
-        </div>
-
-        <!-- 3. Développement & Web (SLAM) -->
-        <div class="glass p-8 rounded-3xl shadow-2xl card-hover skill-category">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="text-4xl">💻</span>
-            <h3 class="text-2xl font-black text-teal-600">Développement & Web (SLAM)</h3>
-          </div>
-          <div id="skills-dev" class="space-y-4"></div>
-        </div>
-
-        <!-- 4. Outils & Supervision -->
-        <div class="glass p-8 rounded-3xl shadow-2xl card-hover skill-category">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="text-4xl">🛠️</span>
-            <h3 class="text-2xl font-black text-teal-600">Outils & Supervision</h3>
-          </div>
-          <div id="skills-outils" class="space-y-4"></div>
-        </div>
-
+      <div class="skills-grid" id="skills-grid-container">
+        <!-- Les domaines de compétences seront injectés ici par JS -->
       </div>
     </section>
 
-    <!-- ========== SECTION PROJETS EN CARROUSEL (RÉPARÉ) ========== -->
+    <!-- ========== SECTION PROJETS EN CARROUSEL ========== -->
     <section id="projets" class="mb-24 scroll-fade">
       <h2 class="text-5xl font-black mb-12 text-white drop-shadow-2xl">🚀 Projets réalisés</h2>
       
@@ -796,7 +764,6 @@
         </div>
       </div>
     </section>
-    
 
     <section id="interets" class="mb-24 scroll-fade">
       <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">🎯 Centres d'intérêt</h2>
@@ -868,7 +835,6 @@
       <h2 class="text-5xl font-black mb-10 text-white drop-shadow-2xl">✉️ Contact</h2>
       <div class="grid md:grid-cols-2 gap-8">
         <form id="contact-form" method="POST" class="space-y-5 glass p-10 rounded-3xl shadow-2xl">
-          <!-- Honeypot anti-spam (invisible) -->
           <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
           
           <label class="block">
@@ -966,7 +932,6 @@
     </div>
   </footer>
 
-  <!-- Bouton Retour en haut -->
   <button id="scroll-to-top" title="Retour en haut">↑</button>
 
   <script>
@@ -1171,7 +1136,7 @@
       }
     });
 
-    // ========== DATA (CORRIGÉE - CHRONOLOGIE FIXÉE) ==========
+    // ========== DATA (AVEC NOUVEAU PROJET VEILLE) ==========
     const data = {
       "parcours": [
         {"date":"Jan. 2026 - Fév. 2026","icon":"💼","titre":"Technicien Systèmes & Réseaux (Stage)","lieu":"Lycée Sévigné, Granville","desc":"Mise en place infrastructure sécurisée, filtrage web avancé et cloud hybride."},
@@ -1185,6 +1150,23 @@
         {"date":"2021-2022","titre":"Baccalauréat","desc":"Lycée Lamine Gueye, Dakar, Sénégal"}
       ],
       "projets": [
+        {
+          "titre":"Veille Technologique Auto-hébergée (FreshRSS sur Oracle Cloud)",
+          "badge":"VEILLE",
+          "badgeColor":"green",
+          "icon":"📡",
+          "resume":"Déploiement d'une solution de veille technologique auto-hébergée sur Oracle Cloud Free Tier pour centraliser et organiser mes sources d'information.",
+          "techs":["Oracle Cloud","Docker","FreshRSS","VPN WireGuard","Reverse Proxy"],
+          "points":[
+            "Instance FreshRSS déployée sur VPS Oracle Cloud (Always Free).",
+            "Organisation par catégories : Cybersécurité, SysAdmin, IA, Cloud.",
+            "Accès sécurisé via VPN WireGuard et reverse proxy HTTPS.",
+            "Centralisation de flux RSS pour une veille quotidienne efficace.",
+            "Accessible via https://veille.alphaly-it.fr"
+          ],
+          "competences":"Cloud • Auto-hébergement • Docker • Veille technologique • Sécurisation",
+          "docLink":"https://veille.alphaly-it.fr/i/?a=global"
+        },
         {
           "titre":"Infrastructure Cloud Hybride & Supervision (Oracle Cloud)",
           "badge":"CLOUD",
@@ -1270,38 +1252,55 @@
         }
       ],
       "competences": {
-        "systemes": [
-          {"nom": "Windows Server 2025", "pourcentage": 85},
-          {"nom": "Active Directory", "pourcentage": 85},
-          {"nom": "Proxmox VE", "pourcentage": 80},
-          {"nom": "Linux Debian", "pourcentage": 80},
-          {"nom": "Docker", "pourcentage": 70}
-        ],
-        "reseau": [
-          {"nom": "pfSense / Ipfire", "pourcentage": 85},
-          {"nom": "VPN (OpenVPN/Wireguard)", "pourcentage": 80},
-          {"nom": "VLAN / Routage", "pourcentage": 80},
-          {"nom": "DMZ & Segmentation", "pourcentage": 75},
-          {"nom": "Cisco (3750/2960)", "pourcentage": 70},
-          {"nom": "Proxy (SQUID)", "pourcentage": 65},
-          {"nom": "AdGuard Home", "pourcentage": 75}
-        ],
-        "dev": [
-          {"nom": "PowerShell", "pourcentage": 50},
-          {"nom": "Bash / Shell", "pourcentage": 50},
-          {"nom": "HTML / CSS / JS", "pourcentage": 60},
-          {"nom": "N8N (Automatisation)", "pourcentage": 65}
-        ],
-        "outils": [
-          {"nom": "GLPI (Helpdesk)", "pourcentage": 85},
-          {"nom": "Zabbix", "pourcentage": 50},
-          {"nom": "Uptime Kuma", "pourcentage": 80},
-          {"nom": "RustDesk", "pourcentage": 70},
-          {"nom": "FOG Project", "pourcentage": 75},
-          {"nom": "LDAP", "pourcentage": 80},
-          {"nom": "Nextcloud", "pourcentage": 65},
-          {"nom": "Audit (PingCastle)", "pourcentage": 70},
-          {"nom": "Audit (Lynis)", "pourcentage": 70}
+        "domains": [
+          {
+            "name": "Systèmes",
+            "icon": "🖥️",
+            "skills": [
+              {"nom": "Windows Server 2025", "pourcentage": 85},
+              {"nom": "Active Directory", "pourcentage": 85},
+              {"nom": "Proxmox VE", "pourcentage": 80},
+              {"nom": "Linux Debian", "pourcentage": 80},
+              {"nom": "Docker", "pourcentage": 70}
+            ]
+          },
+          {
+            "name": "Réseau",
+            "icon": "🌐",
+            "skills": [
+              {"nom": "pfSense / Ipfire", "pourcentage": 85},
+              {"nom": "VPN (OpenVPN/Wireguard)", "pourcentage": 80},
+              {"nom": "VLAN / Routage", "pourcentage": 80},
+              {"nom": "DMZ & Segmentation", "pourcentage": 75},
+              {"nom": "Cisco (3750/2960)", "pourcentage": 70},
+              {"nom": "Proxy (SQUID)", "pourcentage": 65}
+            ]
+          },
+          {
+            "name": "Cloud & Dev",
+            "icon": "☁️",
+            "skills": [
+              {"nom": "Oracle Cloud", "pourcentage": 75},
+              {"nom": "PowerShell", "pourcentage": 50},
+              {"nom": "Bash / Shell", "pourcentage": 50},
+              {"nom": "HTML / CSS / JS", "pourcentage": 60},
+              {"nom": "N8N (Automatisation)", "pourcentage": 65}
+            ]
+          },
+          {
+            "name": "Outils",
+            "icon": "🛠️",
+            "skills": [
+              {"nom": "GLPI (Helpdesk)", "pourcentage": 85},
+              {"nom": "Zabbix", "pourcentage": 50},
+              {"nom": "Uptime Kuma", "pourcentage": 80},
+              {"nom": "RustDesk", "pourcentage": 70},
+              {"nom": "FOG Project", "pourcentage": 75},
+              {"nom": "LDAP", "pourcentage": 80},
+              {"nom": "FreshRSS", "pourcentage": 85},
+              {"nom": "AdGuard Home", "pourcentage": 75}
+            ]
+          }
         ]
       }
     };
@@ -1340,32 +1339,41 @@
       observer.observe(el);
     });
 
-    // ========== RENDU COMPÉTENCES (DESIGN POURCENTAGE) ==========
-    function renderSkills(containerId, skills) {
-      const container = document.getElementById(containerId);
-      skills.forEach(skill => {
-        const skillItem = document.createElement('div');
-        skillItem.className = 'skill-item scroll-fade';
-        skillItem.innerHTML = `
-          <div class="skill-header">
-            <div class="skill-name">${skill.nom}</div>
-            <div class="skill-percentage">${skill.pourcentage}%</div>
-          </div>
-          <div class="skill-bar-container">
-            <div class="skill-bar-fill" style="--skill-width: ${skill.pourcentage}%"></div>
+    // ========== RENDU COMPÉTENCES (NOUVELLE VERSION EN GRILLE) ==========
+    const skillsGridContainer = document.getElementById('skills-grid-container');
+    
+    data.competences.domains.forEach(domain => {
+      const domainCard = document.createElement('div');
+      domainCard.className = 'skill-domain-card scroll-fade';
+      
+      let skillsHTML = '';
+      domain.skills.forEach(skill => {
+        skillsHTML += `
+          <div class="skill-item-compact">
+            <div class="skill-name-row">
+              <div class="skill-name-compact">${skill.nom}</div>
+              <div class="skill-percentage-compact">${skill.pourcentage}%</div>
+            </div>
+            <div class="skill-bar-container-compact">
+              <div class="skill-bar-fill-compact" style="--skill-width: ${skill.pourcentage}%"></div>
+            </div>
           </div>
         `;
-        container.appendChild(skillItem);
-        observer.observe(skillItem);
       });
-    }
+      
+      domainCard.innerHTML = `
+        <div class="skill-domain-header">
+          <div class="skill-domain-icon">${domain.icon}</div>
+          <div class="skill-domain-title">${domain.name}</div>
+        </div>
+        ${skillsHTML}
+      `;
+      
+      skillsGridContainer.appendChild(domainCard);
+      observer.observe(domainCard);
+    });
 
-    renderSkills('skills-systemes', data.competences.systemes);
-    renderSkills('skills-reseau', data.competences.reseau);
-    renderSkills('skills-dev', data.competences.dev);
-    renderSkills('skills-outils', data.competences.outils);
-
-    // ========== CARROUSEL PROJETS (RÉPARÉ AVEC SCROLL-SNAP) ==========
+    // ========== CARROUSEL PROJETS ==========
     const projectsCarousel = document.getElementById('projects-carousel');
     const carouselDots = document.getElementById('carousel-dots');
     const badgeColors = {
@@ -1396,6 +1404,11 @@
           ${projet.techs.map(t => `<span class="tech-badge">${t}</span>`).join('')}
         </div>
         
+        ${projet.docLink && projet.docLink !== '#' ? `
+          <a href="${projet.docLink}" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-lg font-bold text-sm hover:scale-105 transition-all shadow-lg">
+            🔗 Accéder à la veille
+          </a>
+        ` : ''}
         
         <div class="project-details">
           <hr class="my-6 border-gray-300">
@@ -1418,7 +1431,6 @@
       projectsCarousel.appendChild(card);
       observer.observe(card);
 
-      // Créer le dot correspondant
       const dot = document.createElement('div');
       dot.className = 'carousel-dot';
       if (index === 0) dot.classList.add('active');
@@ -1426,7 +1438,7 @@
       carouselDots.appendChild(dot);
     });
 
-    // ========== NAVIGATION CARROUSEL (SCROLL-SNAP NATIF) ==========
+    // ========== NAVIGATION CARROUSEL ==========
     let currentProjectIndex = 0;
 
     function scrollToProjectByIndex(index) {
@@ -1455,7 +1467,6 @@
       scrollToProjectByIndex(newIndex);
     });
 
-    // Observer pour détecter le projet visible au scroll
     const carouselObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
